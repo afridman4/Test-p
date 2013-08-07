@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{76D1F081-5571-4248-8F40-A12694E3C050}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{F58BB776-1CD0-4C42-BA90-5F8CDF1B06C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{94788E4F-E970-4BC7-963E-B89C76743223}"
+	ProjectSection(SolutionItems) = preProject
+		..\apiprovider.js = ..\apiprovider.js
+		..\app.js = ..\app.js
+		..\checkauth.js = ..\checkauth.js
+		..\public\stylesheets\header.css = ..\public\stylesheets\header.css
+		..\public\home.htm = ..\public\home.htm
+		..\public\index1.htm = ..\public\index1.htm
+		..\public\stylesheets\menu.css = ..\public\stylesheets\menu.css
+		..\mongodb-provider.js = ..\mongodb-provider.js
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F58BB776-1CD0-4C42-BA90-5F8CDF1B06C1} = {76D1F081-5571-4248-8F40-A12694E3C050}
+	EndGlobalSection
+EndGlobal

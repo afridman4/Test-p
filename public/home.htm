@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Home page</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/menu.css" />
+    <link rel="Stylesheet" type="text/css" href="/stylesheets/header.css" />
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
+	type="text/javascript"></script>
+</head>
+<body>
+<div class="header">
+    <div class="logoContainer">
+    <a href="./home.htm"><b>BestWebCloudHosting</b></a>
+    </div>
+
+    <div class="topmenu">
+    <ul>
+    <li><a href="#">Search</a>
+        <ul>
+        <li><a href="./searchWeb.htm">Web Site</a> </li>
+        <li><a href="./searchWeb.htm">VPS</a> </li>
+        <li><a href="./searchWeb.htm">Dedicated Server</a> </li>
+        <li><a href="./searchWeb.htm">Colocation</a> </li>
+        <li><a href="./searchWeb.htm">Cloud Platform</a> </li>
+        <li><a href="./searchWeb.htm">Cloud Storage</a> </li>
+        <li><a href="./searchWeb.htm">Cloud Service</a> </li>
+        </ul>
+
+    </li>
+    <li><a href="#">Account</a>
+        <ul>
+        <li><a href="./searchWeb.htm">My Account</a> </li>
+        <li><a href="./searchWeb.htm">Log In</a> </li>
+        <li><a href="./searchWeb.htm">Register</a> </li>
+        </ul>
+    </li>
+    <li><a href="#">Submit a Review</a>
+    </li>
+    <li><a href="./support.htm">Support</a>
+    </li>
+    </ul>
+    </div>
+
+    <div class="searchForm">
+    </div>
+    <div class="logonForm">
+    </div>
+</div>
+<div>
+<br />
+<br />
+<br />
+<br />
+<p>What are you looking for? Not sure? <a href="./help.htm">Please let us help</a></p>
+<table width=80%>
+<tr>
+<th>cc</th>
+<th>What are you looking for?</th>
+<th>What are you looking for?</th>
+</tr>
+</table>
+
+</div>
+
+<h1>htypes list</h1>
+ 
+    <div>
+        <button id="save-htype">Save One Htype</button>
+        <script type="text/javascript">
+            $("#save-htype").click(
+            function () {
+                $.post("http://localhost:3000/api/0.1/savehtype",
+                        { name: "www1", display_name: "111 Create and host my web site", description: "", keywords: ["www", "site", "shared"] },
+                        function (data) {
+                            alert(data[0].name);
+                        },
+                        "json"
+                );
+            });
+        </script>
+    </div>
+<p>
+    Remove htype
+
+</p>
+<br>
+<div>
+    <button id="del-htype">Remove Htype www1</button>
+    <script type="text/javascript">
+        $("#del-htype").click(
+                function() {
+                $.ajax({
+                    type: "DELETE",
+                    dataType: "json",
+                    url: "http://localhost:3000/api/0.1/removehtype/www1",
+                    success: function (data) {
+                        alert("del");
+                    }
+                })
+                }
+        )
+    </script>
+</div>
+
+    <div>
+        <p>Plans:</p>
+        <ul id="plans">
+        <script type="text/javascript">
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "http://localhost:3000/api/0.1/plans/search/provider=hc",
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        $("#plans").append("<li id=\"" + data[i].planname + "\">" + data[i].planname + " " + data[i].provider + " "+ data[i].adv_price+"</li>");
+                    };
+                }
+            });
+        </script>
+        </ul>
+    </div>
+
+    <div>
+        <button id="save-plan">Save One Plan</button>
+        <script type="text/javascript">
+            $("#save-plan").click(
+            function () {
+                $.post("http://localhost:3000/api/0.1/saveplan",
+
+                   { htype : 'web', provider : 'hc', planname : 'webhosting3',
+                    prices : [ {currency: "USD", timeunit: "month", unit: "ALL", number_timeunit: 1, price: 6.99 },
+                               {currency: "USD", timeunit: "month", unit: "", number_timeunit: 12, price: 4.99 	}], 
+                    disk_space : "unlimited", domain_registratin : "free", bandwith : "unlimited",
+                    email_accounts : 5, os : ["windows", "linux"],
+                    database : ["mySQL", "Postgress"],
+                    description : "Domain registration (free), Disk space (unlimited), Bandwidth (unlimited), SSL Certificate, Dedicated IP number (1-2 or 3)",
+                    features : ["SSL Certificate", "Website statistics"],
+                    shoping_cart : ["osCommerce", "ZenCart", "Cube Cart"],
+                    address : {streetAddress: "Main st., 101, apt.101", city: "Zentown", postalCode: '101101'},
+                    phoneNumbers : ["812 123-1234", "916 123-4567"],
+                    adv_price : 8.99 },
+                    function (data) {
+                            alert(data[0].name);
+                        },
+                        "json"
+                );
+            });
+        </script>
+    </div>
+
+
+</body>
+</html>
+
+
