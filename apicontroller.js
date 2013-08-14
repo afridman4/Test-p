@@ -98,11 +98,11 @@ var USER_TEMPLATE =
 };
 
 ApiController = function () {
-    this.driver = new Driver();
+    ApiController.driver = new Driver();
 }
 
 ApiController.prototype.getHtypes = function (callback) {
-    this.driver.getDocs('htypes', {}, callback);
+    ApiController.driver.getDocs('htypes', {}, callback);
 };
 
 ApiController.prototype.getReviews = function (callback) {
@@ -120,7 +120,7 @@ ApiController.prototype.saveHtypes = function (htypes, callback) {
         htype.created = new Date();
     }
 
-    this.driver.saveDocs('htypes', htypes, callback);
+    ApiController.driver.saveDocs('htypes', htypes, callback);
 };
 
 ApiController.prototype.saveOneHtype = function (htype, callback) {
@@ -132,89 +132,89 @@ ApiController.prototype.saveOneHtype = function (htype, callback) {
         console.log('saveOneHtype: ' + htype.name);
         htype.created = new Date();
         
-        this.driver.saveOneDoc('htypes', {name: htype.name}, htype, callback);
+        ApiController.driver.saveOneDoc('htypes', {name: htype.name}, htype, callback);
     }
 };
 
 ApiController.prototype.removeHtype = function( htypeName, callback) {
     console.log("removing htype " + htypeName);
-    this.driver.removeDoc('htypes', {name: htypeName}, callback);
+    ApiController.driver.removeDoc('htypes', {name: htypeName}, callback);
 };
 
 
 ApiController.prototype.removeFeature = function( htypeName, featureName, callback) {
     console.log("removing feature "+ featureName + " htype " + htypeName);
-    this.driver.removeDoc('features', {htype: htypeName, name: featureName}, callback);
+    ApiController.driver.removeDoc('features', {htype: htypeName, name: featureName}, callback);
 };
 
 ApiController.prototype.removePlan = function(provider, planName, callback) {
     console.log("removing plan "+ planName + " provider " + provider);
-    this.driver.removeDoc('plans', {provider: provider, planname: planName}, callback);
+    ApiController.driver.removeDoc('plans', {provider: provider, planname: planName}, callback);
 };
 
 ApiController.prototype.removeProvider = function( name, callback) {
     console.log("removing provider " + name);
-    this.driver.removeDoc('providers', {provider: name}, callback);
+    ApiController.driver.removeDoc('providers', {provider: name}, callback);
 };
 
 
 ApiController.prototype.saveFeature = function (feature, callback) {
     console.log("saveFeature");
-    this.driver.saveOneDoc('features', {htype:feature.htype, name:feature.name}, feature, callback);
+    ApiController.driver.saveOneDoc('features', {htype:feature.htype, name:feature.name}, feature, callback);
 }
 
-updatePlanRatings = function (provider, plan, ratings) {
-    this.driver.getDocs('plans', {provider: provider, planname: plan}, function (err, result){
-        if (err == null) {
-            result[0].generalrating = (results[0].generalrating * result[0].numberoroeviews + ratings.generalrating)/(result[0].numberofreviews + 1);
-            result[0].numberOfReviews++;
-            this.driver.saveOneDoc('plans',{provider: provider, planname: plan}, results[0], function(err, docs){ });
+ApiController.prototype.updatePlanRatings = function (provider, plan, rating) {
+    ApiController.driver.getDocs('plans', {provider: provider, planname: plan}, function (err, result){
+        if (err == null && result != null && result.length > 0) {
+            result[0].generalrating = (result[0].generalrating * result[0].numberofreviews + rating)/(result[0].numberofreviews + 1);
+            result[0].numberofreviews++;
+            ApiController.driver.saveOneDoc('plans',{provider: provider, planname: plan}, result[0], function(err, docs){ });
         }
     })
 };
 
-updateProviderRatings = function (provider, plan, ratings) {
-    this.driver.getDocs('providers', {provider: provider}, function (err, result){
+ApiController.prototype.updateProviderRatings = function (provider, rating) {
+    ApiController.driver.getDocs('providers', {provider: provider}, function (err, result){
         if (err == null) {
-            result[0].generalrating = (results[0].generalrating * result[0].numberoroeviews + ratings.generalrating)/(result[0].numberofreviews + 1);
-            result[0].numberOfReviews++;
-            this.driver.saveOneDoc('providers',{provider: provider}, results[0], function(err, docs){ });
+            result[0].generalrating = (result[0].generalrating * result[0].numberofreviews + rating)/(result[0].numberofreviews + 1);
+            result[0].numberofreviews++;
+            ApiController.driver.saveOneDoc('providers',{provider: provider}, result[0], function(err, docs){ });
         }
     })
 };
 
 ApiController.prototype.saveReview = function (review, callback) {
-    this.driver.saveDocs('reviews', review, callback);
+    ApiController.driver.saveDocs('reviews', review, callback);
 
-    if (plan != null)
-        updatePlanRatings(review.provider, review.plan, review.ratings);
+    if (review.plan != null)
+        this.updatePlanRatings(review.provider, review.plan, review.generalratings);
 
-    updateProviderRatings(review.provider, review.ratings);
+    this.updateProviderRatings(review.provider, review.generalratings);
 }
 
 ApiController.prototype.getFeatures = function (htype_name, callback) {
-    this.driver.getDocs('features', { "htype" : htype_name}, callback);
+    ApiController.driver.getDocs('features', { "htype" : htype_name}, callback);
 }
 
 // TODO banners should be returned either randomly, or using some other logic
 // TODO maybe priority, or... because I do not know yet this logic, postponed implementation
 ApiController.prototype.getBanners = function (n, callback) {
-    this.driver.getRecentNDocs('banners', {}, n, callback);
+    ApiController.driver.getRecentNDocs('banners', {}, n, callback);
 }
 
 ApiController.prototype.searchPlans = function (criteria, callback) {
     var query = querystring.parse(criteria);    // create JSON from string
     // 
     console.log('query.htype =' + query.htype);
-    this.driver.getDocsSorted('plans', query, { adv_price: 1}, callback);
+    ApiController.driver.getDocsSorted('plans', query, { adv_price: 1}, callback);
 }
 
 ApiController.prototype.plansProvider = function (provider, callback) {
-    this.driver.getDocs('plans', { "provider" : provider}, callback);
+    ApiController.driver.getDocs('plans', { "provider" : provider}, callback);
 }
 
 ApiController.prototype.plan = function(provider, planName, callback) {
-    this.driver.getDocs('plans', {provider: provider, planname: planName}, callback);
+    ApiController.driver.getDocs('plans', {provider: provider, planname: planName}, callback);
 };
 
 ApiController.prototype.checkPlanFeatures = function (plan, callback) {
@@ -240,17 +240,17 @@ ApiController.prototype.checkPlanFeatures = function (plan, callback) {
         callback(null, null);
     } else {
         // get all features for all plan.allows
-        this.driver.searchNewFeatures(names, callback);
+        ApiController.driver.searchNewFeatures(names, callback);
     }
 }
 
 ApiController.prototype.savePlan = function (plan, callback) {
     plan.created = new Date();
-    this.driver.saveOneDoc('plans', {planname: plan.planname, provider: plan.provider},  plan, callback);
+    ApiController.driver.saveOneDoc('plans', {planname: plan.planname, provider: plan.provider},  plan, callback);
 }
 
 ApiController.prototype.saveProvider = function (hostingProvider, callback) {
-    this.driver.saveOneDoc('providers', {provider: hostingProvider.provider},  hostingProvider, callback);
+    ApiController.driver.saveOneDoc('providers', {provider: hostingProvider.provider},  hostingProvider, callback);
 }
 
 ApiController.prototype.getTemplate = function(t) {
@@ -275,16 +275,16 @@ ApiController.prototype.getTemplate = function(t) {
 }
 
 ApiController.prototype.getRecentShortReviews = function (n, callback) {
-    this.driver.getRecentNDocs('reviews', {}, n, callback);
+    ApiController.driver.getRecentNDocs('reviews', {}, n, callback);
 }
 
 ApiController.prototype.getProviders = function(callback) {
-    this.driver.getDocs('providers', {}, callback);
+    ApiController.driver.getDocs('providers', {}, callback);
 }
 
 ApiController.prototype.saveUser = function (user, callback) {
     console.log("saveUser");
-    this.driver.saveOneDoc('users', {login: user.login}, user, callback);
+    ApiController.driver.saveOneDoc('users', {login: user.login}, user, callback);
 }
 
 exports.ApiController = ApiController;

@@ -117,8 +117,11 @@ app.get('/api/test/savehtypes', function (req, res) {
  */
 app.get('/api/test/savefeature', api.testSaveFeature);
 
+
+app.get('/api/test/savereview', api.testSaveReview);
+
 /*
-app.get('/api/test/savereview', function (req, res) {
+    function (req, res) {
     var r = apiController.getTemplate('review');
     r.author = 'AF';
     r.time = new Date();

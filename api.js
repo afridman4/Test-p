@@ -245,6 +245,26 @@ exports.testSaveFeature = function (req, res) {
         })
 };
 
+exports.testSaveReview = function (req, res) {
+    var f = apiController.getTemplate('review');
+    f.author = 'default';
+    f.time = new Date();
+    f.provider = 'hostgator';
+    f.plan = 'webhosting2';
+    f.generalratings = 1;
+    f.text = 'wrwrwrwr';
+
+    apiController.saveReview(
+        f,
+        function (error, docs) {
+            if (error) {
+                res.send('Error:' + error);
+            }
+            res.send(docs);
+        })
+};
+
+
 exports.testSavePlan = function (req, res) {
     var p = apiController.getTemplate('plan');
 

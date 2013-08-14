@@ -130,7 +130,7 @@
             function () {
                 $.post("http://localhost:3000/api/0.1/saveplan",
 
-                   { htype : 'web', provider : 'hc', planname : 'webhosting3',
+                   { htype : 'web', provider : 'hostgator', planname : 'webhosting2',
                     prices : [ {currency: "USD", timeunit: "month", unit: "ALL", number_timeunit: 1, price: 6.99 },
                                {currency: "USD", timeunit: "month", unit: "", number_timeunit: 12, price: 4.99 	}], 
                     disk_space : "unlimited", domain_registratin : "free", bandwith : "unlimited",
@@ -141,7 +141,9 @@
                     shoping_cart : ["osCommerce", "ZenCart", "Cube Cart"],
                     address : {streetAddress: "Main st., 101, apt.101", city: "Zentown", postalCode: '101101'},
                     phoneNumbers : ["812 123-1234", "916 123-4567"],
-                    adv_price : 8.99 },
+                    adv_price : 8.99,
+                    generalrating: 0,
+                    numberofreviews: 0},
                     function (data) {
                             alert(data[0].name);
                         },
