@@ -12,7 +12,7 @@ var express = require('express')
   , path = require('path');
 
 
-var ApiProvider = require('./apiprovider').ApiProvider;
+var ApiProvider = require('./apicontroller').ApiController;
 var Authenticator = require ('./checkauth').Authenticator;
 
 var app = express();
@@ -43,7 +43,7 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 
 /*
-var apiProvider = new ApiProvider();
+var apiController = new ApiController();
 */
 var authenticator = new Authenticator();
 
@@ -65,9 +65,11 @@ app.all('/api/0.1/*', authenticator.checkLogin, function (res, req, next) {
 //
 app.post('/api/0.1/savehtypes', api.saveHtypes);
 app.post('/api/0.1/savehtype', api.saveHtype);
+app.post('/api/0.1/saveprovider',api.saveProvider);
 app.post('/api/0.1/saveplan',api.savePlan);
 app.post('/api/0.1/savefeature', api.saveFeature);
 app.post('/api/0.1/savereview', api.saveReview);
+app.post('/api/0.1/saveuser', api.saveUser);
 
 //
 // GET methods
@@ -98,13 +100,13 @@ app.delete('/api/0.1/removeplan/:provider/:planName', api.removePlan);
 ************************************************************************************/
 /*
 app.get('/api/test/savehtypes', function (req, res) {
-    htype = apiProvider.getTemplate('htype');
+    htype = apiController.getTemplate('htype');
     htype.name = 'web';
     htype.display_name = 'Create and host myweb site';
     htype.description = '';
     htype.keywords = ["web", "site", "shared"];
 
-    apiProvider.saveHtypes(htype,
+    apiController.saveHtypes(htype,
             function (error, docs) {
                 if (error) {
                     res.send('Error:' + error);
@@ -117,7 +119,7 @@ app.get('/api/test/savefeature', api.testSaveFeature);
 
 /*
 app.get('/api/test/savereview', function (req, res) {
-    var r = apiProvider.getTemplate('review');
+    var r = apiController.getTemplate('review');
     r.author = 'AF';
     r.time = new Date();
     r.provider = 'hostgator';
@@ -128,7 +130,7 @@ app.get('/api/test/savereview', function (req, res) {
               { name: "feature set", rate: 3}];
     r.text = 'This is a review';
 
-    apiProvider.saveReview(r,
+    apiController.saveReview(r,
         function (error, docs) {
             if (error) {
                 res.send('Error:' + error);
@@ -142,7 +144,7 @@ app.get('/api/test/saveplan', api.testSavePlan);
 
 /*
 app.get('/api/test/checkplanfeatures', function (req, res) {
-    apiProvider.checkPlanFeatures(
+    apiController.checkPlanFeatures(
     { 
         provider: 'hostgator',
         planname: 'web hosting 1',

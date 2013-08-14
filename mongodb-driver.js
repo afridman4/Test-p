@@ -10,13 +10,13 @@ var assert = require('assert');
 
 var CONNECTION_STRING = 'mongodb://localhost:27017/' + 'node-bwch';
 
-Provider = function () {
+Driver = function () {
     MongoClient.connect(CONNECTION_STRING, function (err, db) {
         assert.equal(null, err);
         assert.ok(db != null);
-        Provider.db = db;
+        Driver.db = db;
         console.log('Connected to MongoDB');
-        initDb(Provider.db);
+        initDb(Driver.db);
     });
 
 }
@@ -27,7 +27,8 @@ var collections = [
     {'collectionName':'plans',        'fieldName': {'provider':1, 'planname':1}},
     {'collectionName':'features',     'fieldName': {'htype':1, 'name':1}},
     {'collectionName':'reviews',      'fieldName': null},
-    {'collectionName':'banners',      'fieldName':'url'}
+    {'collectionName':'banners',      'fieldName':'url'},
+    {'collectionName':'users',        'fieldName':'login'}
 ];
 
 initDb = function (db) {
@@ -66,18 +67,18 @@ initDbCollection = function (db, collectionName, fieldName) {
 }
 
 
-Provider.prototype.getCollection = function (name, callback) {
-    console.log('get Collection ' + name +' ' + Provider.db.databaseName);
+Driver.prototype.getCollection = function (name, callback) {
+    console.log('get Collection ' + name +' ' + Driver.db.databaseName);
 
-    Provider.db.collection(name, { strict: true }, function (err, collection) {    // error if collection doesn't exist
+    Driver.db.collection(name, { strict: true }, function (err, collection) {    // error if collection doesn't exist
         if (err) {
             console.log('Cannot find collection, attempt to create: ' + err);
-            Provider.db.createCollection(name, function (error, collection) {
+            Driver.db.createCollection(name, function (error, collection) {
                 if (error) {
                     console.log('Cannot create collection' + error);
                     callback(error);
                 }
-                Provider.db.collection(name, { strict: true }, function (error, collection) {
+                Driver.db.collection(name, { strict: true }, function (error, collection) {
                     if (error) {
                         console.log('Cannot find collection, error: ' + error);
                         callback(error);
@@ -95,7 +96,7 @@ Provider.prototype.getCollection = function (name, callback) {
 };
 
 
-Provider.prototype.getDocs = function (collection_name, query, callback) {
+Driver.prototype.getDocs = function (collection_name, query, callback) {
     console.log("Call getDocs");
     this.getCollection(collection_name, function (error, collection) {
         if (error) callback(error)
@@ -108,7 +109,7 @@ Provider.prototype.getDocs = function (collection_name, query, callback) {
     });
 };
 
-Provider.prototype.getDocsSorted = function (collection_name, query, sort_by, callback) {
+Driver.prototype.getDocsSorted = function (collection_name, query, sort_by, callback) {
     console.log("Call getDocs with options");
     this.getCollection(collection_name, function (error, collection) {
         if (error) callback(error)
@@ -121,7 +122,7 @@ Provider.prototype.getDocsSorted = function (collection_name, query, sort_by, ca
     });
 };
 
-Provider.prototype.getRecentNDocs = function (collection_name, query, n, callback) {
+Driver.prototype.getRecentNDocs = function (collection_name, query, n, callback) {
     this.getCollection(collection_name, function (error, collection) {
         if (error) callback(error)
         else {
@@ -133,7 +134,7 @@ Provider.prototype.getRecentNDocs = function (collection_name, query, n, callbac
     });
 };
 
-Provider.prototype.saveDocs = function (collection_name, docs, callback) {
+Driver.prototype.saveDocs = function (collection_name, docs, callback) {
     this.getCollection(collection_name, function (error, docs_collection) {
         if (error) callback(error)
         else {
@@ -150,7 +151,7 @@ Provider.prototype.saveDocs = function (collection_name, docs, callback) {
     });
 };
 
-Provider.prototype.saveOneDoc = function (collection_name, selector, doc, callback) {
+Driver.prototype.saveOneDoc = function (collection_name, selector, doc, callback) {
 
     if (typeof (doc.length) != "undefined") {
         console.log("Error: can save only one doc");
@@ -174,7 +175,7 @@ Provider.prototype.saveOneDoc = function (collection_name, selector, doc, callba
     }
 };
 
-Provider.prototype.removeDoc = function (collection_name, selector, callback) {
+Driver.prototype.removeDoc = function (collection_name, selector, callback) {
     this.getCollection(collection_name, function (error, doc_collection) {
         if (error)  {
             console.log("cannot get collection "+ collection_name);
@@ -193,7 +194,7 @@ Provider.prototype.removeDoc = function (collection_name, selector, callback) {
 }
 
 
-Provider.prototype.searchNewFeatures = function (names, callback) {
+Driver.prototype.searchNewFeatures = function (names, callback) {
     this.getCollection('features', function (error, features_collection) {
         if (error) callback(error)
         else {
@@ -228,6 +229,6 @@ Provider.prototype.searchNewFeatures = function (names, callback) {
 };
 
 
-exports.Provider = Provider;
+exports.Driver = Driver;
 
 

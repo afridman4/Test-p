@@ -6,14 +6,14 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var ApiProvider = require('./apiprovider').ApiProvider;
+var ApiController = require('./apicontroller').ApiController;
 var Authenticator = require ('./checkauth').Authenticator;
-var apiProvider = new ApiProvider();
+var apiController = new ApiController();
 var authenticator = new Authenticator();
 
 exports.htypes = function(req, res){
     console.log("getting htypes");
-    apiProvider.getHtypes(function (error, htypes) {
+    apiController.getHtypes(function (error, htypes) {
         if (error) {
             res.send(404, 'Error:' + error);
         }
@@ -22,7 +22,7 @@ exports.htypes = function(req, res){
 };
 
 exports.saveHtypes = function (req, res) {
-    apiProvider.saveHtypes(req.body,
+    apiController.saveHtypes(req.body,
         function (error, docs) {
             if (error) {
                 res.send(404, error);
@@ -32,7 +32,7 @@ exports.saveHtypes = function (req, res) {
 };
 
 exports.saveHtype = function (req, res) {
-    apiProvider.saveOneHtype(req.body,
+    apiController.saveOneHtype(req.body,
         function (error, docs) {
             if (error) {
                 res.send(404,error);
@@ -41,8 +41,18 @@ exports.saveHtype = function (req, res) {
         })
 };
 
+exports.saveProvider = function (req, res) {
+    apiController.saveProvider(req.body,
+        function (error, docs) {
+            if (error) {
+                res.send(404, error);
+            }
+            res.send(201, docs);
+        })
+};
+
 exports.savePlan = function (req, res) {
-    apiProvider.savePlan(req.body,
+    apiController.savePlan(req.body,
         function (error, docs) {
             if (error) {
                 res.send(404, error);
@@ -52,7 +62,7 @@ exports.savePlan = function (req, res) {
 };
 
 exports.saveFeature = function (req, res) {
-    apiProvider.saveFeature(req.body,
+    apiController.saveFeature(req.body,
         function (error, docs) {
             if (error) {
                 res.send(404, error);
@@ -62,7 +72,27 @@ exports.saveFeature = function (req, res) {
 };
 
 exports.saveReview = function (req, res) {
-    apiProvider.saveReview(req.body,
+    apiController.saveReview(req.body,
+        function (error, docs) {
+            if (error) {
+                res.send(404, error);
+            }
+            res.send(201, docs);
+        })
+};
+
+exports.saveUser = function (req, res) {
+    apiController.saveUser(req.body,
+        function (error, docs) {
+            if (error) {
+                res.send(404, error);
+            }
+            res.send(201, docs);
+        })
+};
+
+exports.saveProvider = function (req, res) {
+    apiController.saveProvider(req.body,
         function (error, docs) {
             if (error) {
                 res.send(404, error);
@@ -73,7 +103,7 @@ exports.saveReview = function (req, res) {
 
 exports.removeHtype = function(req, res){
     console.log('remove htype = '+ req.param("htype"));
-    apiProvider.removeHtype(req.param("htype"), function (error, docs) {
+    apiController.removeHtype(req.param("htype"), function (error, docs) {
         if (error) {
             res.send(404, error);
         } else {
@@ -84,7 +114,7 @@ exports.removeHtype = function(req, res){
 
 exports.features =   function (req, res) {
     console.log("htype="+req.param("htype"));
-    apiProvider.getFeatures(req.param("htype"), function (error, features) {
+    apiController.getFeatures(req.param("htype"), function (error, features) {
         if (error) {
             res.send(404, error);
         } else {
@@ -95,7 +125,7 @@ exports.features =   function (req, res) {
 
 exports.removeFeature = function (req, res){
     console.log("htype="+req.param("htype") + ' feature=' + req.param("feature"));
-    apiProvider.removeFeature(req.param("htype"), req.param("feature"), function (error, docs) {
+    apiController.removeFeature(req.param("htype"), req.param("feature"), function (error, docs) {
         if (error) {
             res.send(404, error);
         } else {
@@ -106,7 +136,7 @@ exports.removeFeature = function (req, res){
 
 exports.removePlan = function (req, res){
     console.log("Removing plan = " + req.param("planName") + ' provider = ' + req.param("provider"));
-    apiProvider.removePlan(req.param("provider"), req.param("planName"), function (error, docs) {
+    apiController.removePlan(req.param("provider"), req.param("planName"), function (error, docs) {
         if (error) {
             res.send(404, error);
         } else {
@@ -117,7 +147,7 @@ exports.removePlan = function (req, res){
 
 exports.reviewsShortRecent = function (req, res) {
     console.log('get short reviews: ' + req.param("n"));
-    apiProvider.getRecentShortReviews(req.param("n"), function (error, reviews) {
+    apiController.getRecentShortReviews(req.param("n"), function (error, reviews) {
         if (error) {
             res.send(404, error);
         }
@@ -127,7 +157,7 @@ exports.reviewsShortRecent = function (req, res) {
 
 exports.banners = function (req, res) {
     console.log('get banners: ' + req.param("n"));
-    apiProvider.getBanners(req.param("n"), function (error, banners) {
+    apiController.getBanners(req.param("n"), function (error, banners) {
         if (error) {
             res.send(404, error);
         } else {
@@ -138,7 +168,7 @@ exports.banners = function (req, res) {
 
 exports.plansSearch = function (req, res) {
     console.log('search plans: ' + req.param("criteria"));
-    apiProvider.searchPlans(req.param("criteria"), function (error, plans) {
+    apiController.searchPlans(req.param("criteria"), function (error, plans) {
         if (error) {
             res.send(404, error);
         } else {
@@ -149,7 +179,7 @@ exports.plansSearch = function (req, res) {
 
 exports.plansProvider = function (req, res) {
     console.log('get plans for provider: ' + req.param("provider"));
-    apiProvider.plansProvider(req.param("provider"), function (error, plans) {
+    apiController.plansProvider(req.param("provider"), function (error, plans) {
         if (error) {
             res.send(404, error);
         } else {
@@ -160,7 +190,7 @@ exports.plansProvider = function (req, res) {
 
 exports.plan = function (req, res){
     console.log("Getting plan = " + req.param("planName") + ' provider = ' + req.param("provider"));
-    apiProvider.plan(req.param("provider"), req.param("planName"), function (error, docs) {
+    apiController.plan(req.param("provider"), req.param("planName"), function (error, docs) {
         if (error) {
             res.send(404, error);
         } else {
@@ -170,7 +200,7 @@ exports.plan = function (req, res){
 };
 
 exports.removeProvider = function(req, res) {
-    apiProvider.removeProvider(req.param("provider"), function(error, docs) {
+    apiController.removeProvider(req.param("provider"), function(error, docs) {
         if (error) {
             res.send(404, error);
         } else {
@@ -181,7 +211,7 @@ exports.removeProvider = function(req, res) {
 }
 
 exports.providers = function (req, res) {
-    apiProvider.getProviders(function (error, providers) {
+    apiController.getProviders(function (error, providers) {
         if (error) {
             res.send(404, error);
         }
@@ -194,7 +224,7 @@ exports.providers = function (req, res) {
 //
 
 exports.testSaveFeature = function (req, res) {
-    var f = apiProvider.getTemplate('feature');
+    var f = apiController.getTemplate('feature');
     f.htype = 'web'; f.name = 'diskspace';
     f.type = 'int';
     f.unit = 'Gb';		// unit of measurement, like Mb, Hz, etc.
@@ -205,7 +235,7 @@ exports.testSaveFeature = function (req, res) {
     f.hasunlimited= true;	// should show Unlimited
     f.operation = 'ge';
 
-    apiProvider.saveFeature(
+    apiController.saveFeature(
         f,
         function (error, docs) {
             if (error) {
@@ -216,7 +246,7 @@ exports.testSaveFeature = function (req, res) {
 };
 
 exports.testSavePlan = function (req, res) {
-    var p = apiProvider.getTemplate('plan');
+    var p = apiController.getTemplate('plan');
 
     p.htype = 'web';
     p.provider = 'hostgator';
@@ -255,7 +285,7 @@ exports.testSavePlan = function (req, res) {
     p.phoneNumbers = ["812 123-1234", "916 123-4567"];
     p.adv_price = 4.99;
 
-    apiProvider.savePlan(p,
+    apiController.savePlan(p,
         function (error, docs) {
             if (error) {
                 res.send('Error:' + error);
