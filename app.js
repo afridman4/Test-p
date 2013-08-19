@@ -70,6 +70,7 @@ app.post('/api/0.1/saveplan',api.savePlan);
 app.post('/api/0.1/savefeature', api.saveFeature);
 app.post('/api/0.1/savereview', api.saveReview);
 app.post('/api/0.1/saveuser', api.saveUser);
+app.post('/api/0.1/savebanner', api.saveBanner)
 
 //
 // GET methods
@@ -78,7 +79,9 @@ app.post('/api/0.1/saveuser', api.saveUser);
 app.get('/api/0.1/htypes', api.htypes);
 app.get('/api/0.1/features/:htype', api.features);
 app.get('/api/0.1/reviews/short/recent/:n', api.reviewsShortRecent);
-app.get('/api/0.1/banners/:n', api.banners);
+app.get('/api/0.1/reviews', api.reviews);
+app.get('/api/0.1/banners', api.banners);
+app.get('/api/0.1/banners/:n', api.bannersN);
 app.get('/api/0.1/plans/search/:criteria', api.plansSearch);
 app.get('/api/0.1/plans/:provider', api.plansProvider);
 app.get('/api/0.1/plan/:provider/:planName', api.plan);
@@ -91,6 +94,7 @@ app.delete('/api/0.1/removehtype/:htype', api.removeHtype);
 app.delete('/api/0.1/removefeature/:htype/:feature', api.removeFeature);
 app.delete('/api/0.1/removeprovider/:provider', api.removeProvider);
 app.delete('/api/0.1/removeplan/:provider/:planName', api.removePlan);
+app.delete('/api/0.1/removebanner/:id', api.removeBanner);
 
 
 /***********************************************************************************
@@ -120,30 +124,9 @@ app.get('/api/test/savefeature', api.testSaveFeature);
 
 app.get('/api/test/savereview', api.testSaveReview);
 
-/*
-    function (req, res) {
-    var r = apiController.getTemplate('review');
-    r.author = 'AF';
-    r.time = new Date();
-    r.provider = 'hostgator';
-    r.plan = 'Web1';
-    r.general_ratings = 5;
-    r.ratings = [{ name: "service", rate: 5 }, { name: "relability", rate: 4 },
-              { name: "performance", rate: 7 }, { name: "ease of use", rate: 8 },
-              { name: "feature set", rate: 3}];
-    r.text = 'This is a review';
-
-    apiController.saveReview(r,
-        function (error, docs) {
-            if (error) {
-                res.send('Error:' + error);
-            }
-            res.send(docs);
-        })
-});
-*/
-
 app.get('/api/test/saveplan', api.testSavePlan);
+
+app.get('/api/test/savebanner', api.testSaveBanner);
 
 /*
 app.get('/api/test/checkplanfeatures', function (req, res) {

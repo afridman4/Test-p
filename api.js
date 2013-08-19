@@ -21,6 +21,16 @@ exports.htypes = function(req, res){
     })
 };
 
+exports.reviews = function(req, res){
+    console.log("getting reviews");
+    apiController.getReviews(function (error, htypes) {
+        if (error) {
+            res.send(404, 'Error:' + error);
+        }
+        res.send(200, htypes);
+    })
+};
+
 exports.saveHtypes = function (req, res) {
     apiController.saveHtypes(req.body,
         function (error, docs) {
@@ -49,6 +59,17 @@ exports.saveProvider = function (req, res) {
             }
             res.send(201, docs);
         })
+};
+
+exports.saveBanner = function (req, res) {
+    apiController.saveBanner(req.body,
+        function(error, docs) {
+            if  (error) {
+                res.send(404, error);
+            }
+            res.send(201, docs);
+        }
+    )
 };
 
 exports.savePlan = function (req, res) {
@@ -134,6 +155,17 @@ exports.removeFeature = function (req, res){
     });
 };
 
+exports.removeBanner = function (req, res){
+    console.log("removing banner id="+req.param("id"));
+    apiController.removeBanner(req.param("id"),function (error, docs) {
+        if (error) {
+            res.send(404, error);
+        } else {
+            res.send(200, docs);
+        }
+    });
+};
+
 exports.removePlan = function (req, res){
     console.log("Removing plan = " + req.param("planName") + ' provider = ' + req.param("provider"));
     apiController.removePlan(req.param("provider"), req.param("planName"), function (error, docs) {
@@ -152,6 +184,17 @@ exports.reviewsShortRecent = function (req, res) {
             res.send(404, error);
         }
         res.send(200, reviews);
+    });
+};
+
+exports.bannersN = function (req, res) {
+    console.log('get banners: ' + req.param("n"));
+    apiController.getNBanners(req.param("n"), function (error, banners) {
+        if (error) {
+            res.send(404, error);
+        } else {
+            res.send(200, banners);
+        }
     });
 };
 
@@ -306,6 +349,21 @@ exports.testSavePlan = function (req, res) {
     p.adv_price = 4.99;
 
     apiController.savePlan(p,
+        function (error, docs) {
+            if (error) {
+                res.send('Error:' + error);
+            }
+            res.send(docs);
+        });
+};
+
+exports.testSaveBanner = function (req, res) {
+    var p = apiController.getTemplate('banner');
+
+    p.htmlcode = '<body>PPP</body>';
+    p.alttext = 'hostgator';
+
+    apiController.saveBanner(p,
         function (error, docs) {
             if (error) {
                 res.send('Error:' + error);

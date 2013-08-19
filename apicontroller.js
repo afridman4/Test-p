@@ -83,8 +83,8 @@ var REVIEW_TEMPLATE =
 
 var BANNER_TEMPLATE =
 {
-    image:'url',		// image URL
-	url:'url'		// target URL	
+    htmlcode: '<html></html>',       // banner code
+    alttext:''
 };
 
 var USER_TEMPLATE =
@@ -106,6 +106,8 @@ ApiController.prototype.getHtypes = function (callback) {
 };
 
 ApiController.prototype.getReviews = function (callback) {
+    // TODO - should be paged
+    ApiController.driver.getDocs('reviews', {}, callback);
 };
 
 ApiController.prototype.saveHtypes = function (htypes, callback) {
@@ -163,6 +165,16 @@ ApiController.prototype.saveFeature = function (feature, callback) {
     ApiController.driver.saveOneDoc('features', {htype:feature.htype, name:feature.name}, feature, callback);
 }
 
+ApiController.prototype.saveBanner = function (banner, callback) {
+    console.log("saveBanner");
+    ApiController.driver.saveOneDoc('banners', null, banner, callback);
+}
+
+ApiController.prototype.removeBanner = function( id, callback) {
+    console.log("removing banner id= " + id);
+    ApiController.driver.removeDoc('banners', {_id: id}, callback);
+};
+
 ApiController.prototype.updatePlanRatings = function (provider, plan, rating) {
     ApiController.driver.getDocs('plans', {provider: provider, planname: plan}, function (err, result){
         if (err == null && result != null && result.length > 0) {
@@ -198,8 +210,12 @@ ApiController.prototype.getFeatures = function (htype_name, callback) {
 
 // TODO banners should be returned either randomly, or using some other logic
 // TODO maybe priority, or... because I do not know yet this logic, postponed implementation
-ApiController.prototype.getBanners = function (n, callback) {
+ApiController.prototype.getNBanners = function (n, callback) {
     ApiController.driver.getRecentNDocs('banners', {}, n, callback);
+}
+
+ApiController.getBanners = function(callback) {
+    ApiController.driver.getDocs('banners', {}, callback);
 }
 
 ApiController.prototype.searchPlans = function (criteria, callback) {

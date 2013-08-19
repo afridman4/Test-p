@@ -27,7 +27,7 @@ var collections = [
     {'collectionName':'plans',        'fieldName': {'provider':1, 'planname':1}},
     {'collectionName':'features',     'fieldName': {'htype':1, 'name':1}},
     {'collectionName':'reviews',      'fieldName': null},
-    {'collectionName':'banners',      'fieldName':'url'},
+    {'collectionName':'banners',      'fieldName': null},
     {'collectionName':'users',        'fieldName':'login'}
 ];
 
@@ -162,6 +162,13 @@ Driver.prototype.saveOneDoc = function (collection_name, selector, doc, callback
             else {
 
                 console.log('saveOneDoc in collection ' + collection_name);
+
+                if (selector == null) {
+                    if (doc._id == null)
+                        selector = {_id: new ObjectID().valueOf()};
+                    else
+                        selector = {_id: doc._id};
+                }
 
                 doc_collection.update(selector, doc, {upsert:true, w: 1}, function (err, results) {
                     if (err) {
