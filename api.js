@@ -166,6 +166,17 @@ exports.removeBanner = function (req, res){
     });
 };
 
+exports.removeReview = function (req, res){
+    console.log("removing review id="+req.param("id"));
+    apiController.removeReview(req.param("id"),function (error, docs) {
+        if (error) {
+            res.send(404, error);
+        } else {
+            res.send(200, docs);
+        }
+    });
+};
+
 exports.removePlan = function (req, res){
     console.log("Removing plan = " + req.param("planName") + ' provider = ' + req.param("provider"));
     apiController.removePlan(req.param("provider"), req.param("planName"), function (error, docs) {

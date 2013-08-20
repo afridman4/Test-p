@@ -175,6 +175,11 @@ ApiController.prototype.removeBanner = function( id, callback) {
     ApiController.driver.removeDoc('banners', {_id: id}, callback);
 };
 
+ApiController.prototype.removeReview = function( id, callback) {
+    console.log("removing review id= " + id);
+    ApiController.driver.removeDoc('reviews', {_id: id}, callback);
+};
+
 ApiController.prototype.updatePlanRatings = function (provider, plan, rating) {
     ApiController.driver.getDocs('plans', {provider: provider, planname: plan}, function (err, result){
         if (err == null && result != null && result.length > 0) {

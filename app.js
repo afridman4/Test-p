@@ -95,6 +95,7 @@ app.delete('/api/0.1/removefeature/:htype/:feature', api.removeFeature);
 app.delete('/api/0.1/removeprovider/:provider', api.removeProvider);
 app.delete('/api/0.1/removeplan/:provider/:planName', api.removePlan);
 app.delete('/api/0.1/removebanner/:id', api.removeBanner);
+app.delete('/api/0.1/removereview/:id', api.removeReview);
 
 
 /***********************************************************************************
