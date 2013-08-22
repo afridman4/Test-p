@@ -189,12 +189,36 @@ Driver.prototype.removeDoc = function (collection_name, selector, callback) {
             callback(error);
         } else {
             console.log("removeDoc in collection " + collection_name);
+            console.log(selector);
             doc_collection.remove(selector, {w:1}, function(err, numberOfRemoveDocs) {
                 if (err) {
                     console.log("cannot remove doc " + err);
                     callback(err);
-                } else
+                } else {
+                    console.log('number of removed docs='+numberOfRemoveDocs);
                     callback(numberOfRemoveDocs);
+                }
+            })
+        }
+    })
+}
+
+Driver.prototype.removeDocById = function (collection_name, id, callback) {
+    this.getCollection(collection_name, function (error, doc_collection) {
+        if (error)  {
+            console.log("cannot get collection "+ collection_name);
+            callback(error);
+        } else {
+            console.log("removeDoc in collection " + collection_name);
+            console.log(id);
+            doc_collection.remove({_id:ObjectID(id)}, {w:1}, function(err, numberOfRemoveDocs) {
+                if (err) {
+                    console.log("cannot remove doc " + err);
+                    callback(err);
+                } else {
+                    console.log('number of removed docs='+numberOfRemoveDocs);
+                    callback(numberOfRemoveDocs);
+                }
             })
         }
     })

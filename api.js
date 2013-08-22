@@ -7,9 +7,7 @@
  */
 
 var ApiController = require('./apicontroller').ApiController;
-var Authenticator = require ('./checkauth').Authenticator;
 var apiController = new ApiController();
-var authenticator = new Authenticator();
 
 exports.htypes = function(req, res){
     console.log("getting htypes");
@@ -230,6 +228,34 @@ exports.plansSearch = function (req, res) {
         }
     });
 };
+
+/*
+exports.plansSearchCount = function (req, res) {
+    console.log('search plans count: ' + req.param("criteria"));
+    apiController.searchPlans(req.param("criteria"), function (error, plans) {
+        if (error) {
+            res.send(404, error);
+        } else {
+            res.send(200, plans);
+        }
+    });
+};
+
+exports.plansSearchPaged = function (req, res) {
+    console.log('search plans: ' + req.param("criteria") + 'page# ' + req.param("n")
+        + " page length "+ req.param("length")
+        + " sorting by "+ req.param("sorting"));
+
+
+    apiController.searchPlans(req.param("criteria"), function (error, plans) {
+        if (error) {
+            res.send(404, error);
+        } else {
+            res.send(200, plans);
+        }
+    });
+};
+*/
 
 exports.plansProvider = function (req, res) {
     console.log('get plans for provider: ' + req.param("provider"));

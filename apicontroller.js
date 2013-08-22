@@ -56,7 +56,9 @@ var FEATURE_TEMPLATE =
 {
     htype: 'default',   // for what htype is applicable
 	name:'default',
-    type:'',		// actually this is enum int, bool (yes, no), string, oneof, enum, 
+    display:'description',
+    type:'',		// actually this is enum int, bool (yes, no), string, oneof, enum,
+    ismultiple:0,   // allow multiple choice
 	unit:'',		// unit of measurement, like Mb, Hz, etc.
 	maxvalue: 0,
 	minvalue: 0,
@@ -172,12 +174,12 @@ ApiController.prototype.saveBanner = function (banner, callback) {
 
 ApiController.prototype.removeBanner = function( id, callback) {
     console.log("removing banner id= " + id);
-    ApiController.driver.removeDoc('banners', {_id: id}, callback);
+    ApiController.driver.removeDocById('banners', id, callback);
 };
 
 ApiController.prototype.removeReview = function( id, callback) {
     console.log("removing review id= " + id);
-    ApiController.driver.removeDoc('reviews', {_id: id}, callback);
+    ApiController.driver.removeDocById('reviews', id, callback);
 };
 
 ApiController.prototype.updatePlanRatings = function (provider, plan, rating) {

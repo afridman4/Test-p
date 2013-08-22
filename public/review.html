@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reviews</title>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
+            type="text/javascript"></script>
+
+</head>
+<body>
+<h1>Reviews</h1>
+<div>
+    <p>Reviwes:</p>
+    <ul id="rv">
+        <script type="text/javascript">
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "http://localhost:3000/api/0.1/reviews",
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        $("#rv").append("<li id=\"" + data[i].provider + "\">" + data[i].provider + " "+ data[i].generalrating+" of " + data[i].numberofreviews + "</li>");
+                    };
+                }
+            });
+        </script>
+    </ul>
+</div>
+
+<div>
+    <button id="rem-r">Remove 1 rev</button>
+    <script type="text/javascript">
+        $("#rem-r").click(
+                function() {
+                    $.ajax({
+                        type: "DELETE",
+                        dataType: "json",
+                        url: "http://localhost:3000/api/0.1/removereview/520b7358d588cc4021000001",
+                        success: function (data) {
+                            alert("deleted");
+                        }
+                    })
+                });
+    </script>
+</div>
+
+</body></html>

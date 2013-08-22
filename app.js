@@ -12,7 +12,6 @@ var express = require('express')
   , path = require('path');
 
 
-var ApiProvider = require('./apicontroller').ApiController;
 var Authenticator = require ('./checkauth').Authenticator;
 
 var app = express();
@@ -83,6 +82,8 @@ app.get('/api/0.1/reviews', api.reviews);
 app.get('/api/0.1/banners', api.banners);
 app.get('/api/0.1/banners/:n', api.bannersN);
 app.get('/api/0.1/plans/search/:criteria', api.plansSearch);
+//app.get('/api/0.1/plans/search/:criteria/count', api.plansSearchCount);
+//app.get('/api/0.1/plans/search/:criteria/sort/:sorting/page/:length/:n', api.plansSearchPaged);
 app.get('/api/0.1/plans/:provider', api.plansProvider);
 app.get('/api/0.1/plan/:provider/:planName', api.plan);
 app.get('/api/0.1/providers', api.providers);
