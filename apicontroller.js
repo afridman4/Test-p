@@ -215,6 +215,10 @@ ApiController.prototype.getFeatures = function (htype_name, callback) {
     ApiController.driver.getDocs('features', { "htype" : htype_name}, callback);
 }
 
+ApiController.prototype.getFeature = function (htype_name, feature_name, callback) {
+    ApiController.driver.getDocs('features', { "htype" : htype_name, "name" : feature_name}, callback);
+}
+
 // TODO banners should be returned either randomly, or using some other logic
 // TODO maybe priority, or... because I do not know yet this logic, postponed implementation
 ApiController.prototype.getNBanners = function (n, callback) {

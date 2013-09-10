@@ -142,6 +142,17 @@ exports.features =   function (req, res) {
     })
 };
 
+exports.feature =   function (req, res) {
+    console.log("get feature htype="+req.param("htype")+" name="+req.param('fname'));
+    apiController.getFeature(req.param("htype"), req.param('fname'), function (error, features) {
+        if (error) {
+            res.send(404, error);
+        } else {
+            res.send(200, features);
+        }
+    })
+};
+
 exports.removeFeature = function (req, res){
     console.log("htype="+req.param("htype") + ' feature=' + req.param("feature"));
     apiController.removeFeature(req.param("htype"), req.param("feature"), function (error, docs) {

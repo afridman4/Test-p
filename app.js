@@ -77,6 +77,7 @@ app.post('/api/0.1/savebanner', api.saveBanner)
 
 app.get('/api/0.1/htypes', api.htypes);
 app.get('/api/0.1/features/:htype', api.features);
+app.get('/api/0.1/features/:htype/:fname', api.feature);
 app.get('/api/0.1/reviews/short/recent/:n', api.reviewsShortRecent);
 app.get('/api/0.1/reviews', api.reviews);
 app.get('/api/0.1/banners', api.banners);
