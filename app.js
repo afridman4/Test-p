@@ -8,9 +8,11 @@ var express = require('express')
   , user = require('./routes/user')
   , api = require('./api')
   , http = require('http')
-  , url = require("url")    
+  , url = require("url")
+  , fs = require("fs")
   , path = require('path');
 
+var access_logfile = fs.createWriteStream('./access.log', {flags: 'a'});
 
 var Authenticator = require ('./checkauth').Authenticator;
 
@@ -21,7 +23,7 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
-app.use(express.logger('dev'));
+app.use(express.logger({stream:access_logfile, format:'dev'}));
 app.use(express.bodyParser());
 app.use(express.cookieParser());
 app.use(express.session({secret: 'bwch-sss'}));

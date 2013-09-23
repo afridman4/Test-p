@@ -1,9 +1,12 @@
 // generic apiProvider
 
 var Driver = require('./mongodb-driver').Driver;
+// var winston = require('winston');
 var assert = require('assert');
 var querystring = require('querystring');
 
+// winston.add(winston.transports.File, { filename: './output.log'});
+// console.log('Added winston transport');
 /*
 //    Templates for various records
 */
@@ -133,6 +136,7 @@ ApiController.prototype.saveOneHtype = function (htype, callback) {
         console.log("SaveOneHType cannot save an array");
         callback("Error: SaveOneHType cannot save an array");
     } else {
+//        winston.info('saveOneHtype: ' + htype.name);
         console.log('saveOneHtype: ' + htype.name);
         htype.created = new Date();
         
@@ -194,7 +198,7 @@ ApiController.prototype.updatePlanRatings = function (provider, plan, rating) {
 
 ApiController.prototype.updateProviderRatings = function (provider, rating) {
     ApiController.driver.getDocs('providers', {provider: provider}, function (err, result){
-        if (err == null) {
+        if (err == null && result != null && result.length > 0) {
             result[0].generalrating = (result[0].generalrating * result[0].numberofreviews + rating)/(result[0].numberofreviews + 1);
             result[0].numberofreviews++;
             ApiController.driver.saveOneDoc('providers',{provider: provider}, result[0], function(err, docs){ });
