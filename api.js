@@ -19,6 +19,16 @@ exports.htypes = function(req, res){
     })
 };
 
+exports.htype = function(req, res){
+    console.log("getting htype "+req.param("hname"));
+    apiController.getHtype(req.param("hname"), function (error, htypes) {
+        if (error) {
+            res.send(404, 'Error:' + error);
+        }
+        res.send(200, htypes);
+    })
+};
+
 exports.reviews = function(req, res){
     console.log("getting reviews");
     apiController.getReviews(function (error, htypes) {

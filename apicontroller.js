@@ -110,6 +110,10 @@ ApiController.prototype.getHtypes = function (callback) {
     ApiController.driver.getDocs('htypes', {}, callback);
 };
 
+ApiController.prototype.getHtype = function (htypeName, callback) {
+    ApiController.driver.getDocs('htypes', {name: htypeName}, callback);
+};
+
 ApiController.prototype.getReviews = function (callback) {
     // TODO - should be paged
     ApiController.driver.getDocs('reviews', {}, callback);
