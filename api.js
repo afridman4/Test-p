@@ -213,6 +213,10 @@ exports.reviewsShortRecent = function (req, res) {
         if (error) {
             res.send(404, error);
         }
+        for (var i = 0; i < reviews.length; i++) {
+            var length = reviews[i].text.length > 160 ? 160 : reviews[i].text.length;
+            reviews[i].text = reviews[i].text.substr(0, length);
+        }
         res.send(200, reviews);
     });
 };
