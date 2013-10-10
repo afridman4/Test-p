@@ -4,8 +4,8 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
+//  , routes = require('./routes')
+//  , user = require('./routes/user')
   , api = require('./api')
   , http = require('http')
   , url = require("url")
@@ -40,8 +40,8 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.get('/users', user.list);
+// app.get('/', routes.index);
+// app.get('/users', user.list);
 
 /*
 var apiController = new ApiController();
@@ -77,19 +77,26 @@ app.post('/api/0.1/savebanner', api.saveBanner)
 // GET methods
 //
 
+// htypes
 app.get('/api/0.1/htypes', api.htypes);
 app.get('/api/0.1/htype/:hname', api.htype);
+// features
 app.get('/api/0.1/features/:htype', api.features);
 app.get('/api/0.1/features/:htype/:fname', api.feature);
+// reviews
 app.get('/api/0.1/reviews/short/recent/:n', api.reviewsShortRecent);
+app.get('/api/0.1/reviews/:provider/:planName', api.reviewsProviderPlan)
 app.get('/api/0.1/reviews', api.reviews);
+// banners
 app.get('/api/0.1/banners', api.banners);
 app.get('/api/0.1/banners/:n', api.bannersN);
+// plans
 app.get('/api/0.1/plans/search/:criteria', api.plansSearch);
 //app.get('/api/0.1/plans/search/:criteria/count', api.plansSearchCount);
 //app.get('/api/0.1/plans/search/:criteria/sort/:sorting/page/:length/:n', api.plansSearchPaged);
 app.get('/api/0.1/plans/:provider', api.plansProvider);
 app.get('/api/0.1/plan/:provider/:planName', api.plan);
+// providers
 app.get('/api/0.1/providers', api.providers);
 
 //

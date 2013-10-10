@@ -39,6 +39,16 @@ exports.reviews = function(req, res){
     })
 };
 
+exports.reviewsProviderPlan = function(req, res) {
+    console.log("getting reviews for provider "+req.param("provider")+" plan "+req.param("planName"));
+    apiController.getReviewsPlanProvider(req.param("provider"), req.param("planName"),function (error, results){
+        if (error) {
+            res.send(404, 'Error:' + error);
+        }
+        res.send(200, results);
+    })
+};
+
 exports.saveHtypes = function (req, res) {
     apiController.saveHtypes(req.body,
         function (error, docs) {

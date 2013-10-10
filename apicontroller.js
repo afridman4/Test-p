@@ -119,6 +119,10 @@ ApiController.prototype.getReviews = function (callback) {
     ApiController.driver.getDocs('reviews', {}, callback);
 };
 
+ApiController.prototype.getReviewsPlanProvider = function (providerName, planName, callback) {
+    ApiController.driver.getDocs('reviews', {provider:providerName, plan:planName}, callback);
+};
+
 ApiController.prototype.saveHtypes = function (htypes, callback) {
 
     if (typeof (htypes.length) == "undefined")
