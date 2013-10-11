@@ -107,7 +107,7 @@ ApiController = function () {
 }
 
 ApiController.prototype.getHtypes = function (callback) {
-    ApiController.driver.getDocs('htypes', {}, callback);
+    ApiController.driver.getDocsSorted('htypes', {}, { sort_order: 1}, callback);
 };
 
 ApiController.prototype.getHtype = function (htypeName, callback) {
