@@ -15,6 +15,13 @@ var express = require('express')
 var access_logfile = fs.createWriteStream('./access.log', {flags: 'a'});
 
 var Authenticator = require ('./checkauth').Authenticator;
+var Driver = require('./mongodb-driver').Driver;
+var driver = new Driver();
+
+var authenticator = new Authenticator(driver);
+var ApiController = require('./apicontroller').ApiController;
+
+api.apiInit(new ApiController(driver));
 
 var app = express();
 
@@ -28,32 +35,22 @@ app.use(express.bodyParser());
 app.use(express.cookieParser());
 app.use(express.session({secret: 'bwch-sss'}));
 app.use(express.methodOverride());
+// app.use('/api/0.1/providers', authenticator.checkAdminLogin);
+// app.use('/api/0.1/htypes', authenticator.checkLogin);
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
-
-// var auth = express.basicAuth('testuser', 'testpass');
-//app.use(auth);
-
 
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-// app.get('/', routes.index);
-// app.get('/users', user.list);
-
-/*
-var apiController = new ApiController();
-*/
-var authenticator = new Authenticator();
-
 //
 // Authentication
 //
 
-app.post('/api/login', authenticator.login);
-app.post('/api/logout', authenticator.logout);
+app.post('/api/0.1/login', authenticator.login);
+app.post('/api/0.1/logout', authenticator.logout);
 
 /*
 app.all('/api/0.1/*', authenticator.checkLogin, function (res, req, next) {
@@ -98,6 +95,9 @@ app.get('/api/0.1/plans/:provider', api.plansProvider);
 app.get('/api/0.1/plan/:provider/:planName', api.plan);
 // providers
 app.get('/api/0.1/providers', api.providers);
+// users
+app.get('/api/0.1/user/:login', api.user);
+app.get('/api/0.1/users/search/:criteria', api.usersSearch);
 
 //
 // DELETE methods
@@ -108,6 +108,7 @@ app.delete('/api/0.1/removeprovider/:provider', api.removeProvider);
 app.delete('/api/0.1/removeplan/:provider/:planName', api.removePlan);
 app.delete('/api/0.1/removebanner/:id', api.removeBanner);
 app.delete('/api/0.1/removereview/:id', api.removeReview);
+app.delete('/api/0.1/removeuser/:login', api.removeUser);
 
 
 /***********************************************************************************

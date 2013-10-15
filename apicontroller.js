@@ -98,12 +98,14 @@ var USER_TEMPLATE =
     login:'',		// login
     password:'',    // password hash
     role:0,         // 0 - regular user, 1 - admin
-    email:'',
+    emails:[],      // may be several emails
     phone:''
 };
 
-ApiController = function () {
-    ApiController.driver = new Driver();
+ApiController = function (dbDriver) {
+    console.log("ApiController constructor");
+//    ApiController.driver = new Driver();
+    ApiController.driver = dbDriver;
 }
 
 ApiController.prototype.getHtypes = function (callback) {
@@ -157,6 +159,10 @@ ApiController.prototype.removeHtype = function( htypeName, callback) {
     ApiController.driver.removeDoc('htypes', {name: htypeName}, callback);
 };
 
+ApiController.prototype.removeUser = function( loginName, callback) {
+    console.log("removing user " + loginName);
+    ApiController.driver.removeDoc('users', {login: loginName}, callback);
+};
 
 ApiController.prototype.removeFeature = function( htypeName, featureName, callback) {
     console.log("removing feature "+ featureName + " htype " + htypeName);
@@ -324,6 +330,16 @@ ApiController.prototype.getProviders = function(callback) {
 ApiController.prototype.saveUser = function (user, callback) {
     console.log("saveUser");
     ApiController.driver.saveOneDoc('users', {login: user.login}, user, callback);
+}
+
+ApiController.prototype.user = function(loginName, callback) {
+    ApiController.driver.getDocs('users', {login: loginName}, callback);
+};
+
+ApiController.prototype.searchUsers = function (criteria, callback) {
+    var query = JSON.parse(criteria);    // create JSON from string
+    console.log('Search users by' + query.name);
+    ApiController.driver.getDocsSorted('users', query, { name: 1}, callback);
 }
 
 exports.ApiController = ApiController;

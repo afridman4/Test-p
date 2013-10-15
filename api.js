@@ -6,8 +6,15 @@
  * To change this template use File | Settings | File Templates.
  */
 
-var ApiController = require('./apicontroller').ApiController;
-var apiController = new ApiController();
+//var ApiController = require('./apicontroller').ApiController;
+//var apiController = new ApiController();
+
+var apiController;
+
+exports.apiInit = function (controller) {
+    console.log("apiInit");
+    apiController = controller;
+}
 
 exports.htypes = function(req, res){
     console.log("getting htypes");
@@ -129,6 +136,18 @@ exports.saveUser = function (req, res) {
             res.send(201, docs);
         })
 };
+
+exports.user = function(req, res){
+    console.log("getting user "+req.param("login"));
+    apiController.user(req.param("login"), function (error, users) {
+        if (error) {
+            res.send(404, 'Error:' + error);
+        }
+        res.send(200, users);
+    })
+};
+
+
 
 exports.saveProvider = function (req, res) {
     apiController.saveProvider(req.body,
@@ -262,6 +281,28 @@ exports.plansSearch = function (req, res) {
             res.send(200, plans);
         }
     });
+};
+
+exports.usersSearch = function (req, res) {
+    console.log('search users: ' + req.param("criteria"));
+    apiController.searchUsers(req.param("criteria"), function (error, plans) {
+        if (error) {
+            res.send(404, error);
+        } else {
+            res.send(200, plans);
+        }
+    });
+};
+
+exports.removeUser = function(req, res){
+    console.log('remove user = '+ req.param("login"));
+    apiController.removeUser(req.param("login"), function (error, docs) {
+        if (error) {
+            res.send(404, error);
+        } else {
+            res.send(200, docs);
+        }
+    })
 };
 
 /*

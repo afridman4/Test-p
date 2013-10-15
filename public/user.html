@@ -26,13 +26,13 @@
     </ul>
 </div>
 <div>
-    <p>Login</p>
+    <p>Add user</p>
     <button id="login">Login</button>
     <script type="text/javascript">
         $("#login").click(
                 function () {
-                    $.post("http://localhost:3000/api/0.1/login",
-                            { user: "test", pass: "test" },
+                    $.post("http://localhost:3000/api/0.1/saveUser",
+                            { name: "Test A Test", login: "test1", password: "test1" },
                             function (data) {
                                 alert(data);
                             },
@@ -41,20 +41,23 @@
                 });
     </script>
 
-<p>Logout</p>
-    <button id="logout">Logout</button>
+    <p>Remove</p>
+    <button id="del-user">Remove user/test1</button>
     <script type="text/javascript">
-        $("#logout").click(
-                function () {
-                    $.post("http://localhost:3000/api/0.1/logout",
-                            {},
-                            function (data) {
-                                alert(data);
-                            },
-                            "text"
-                    );
-                });
+        $("#del-user").click(
+                function() {
+                    $.ajax({
+                        type: "DELETE",
+                        dataType: "json",
+                        url: "http://localhost:3000/api/0.1/removeuser/test1",
+                        success: function (data) {
+                            alert("del");
+                        }
+                    })
+                }
+        )
     </script>
+
 
 
 </div>
