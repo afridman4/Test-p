@@ -98,7 +98,7 @@ var USER_TEMPLATE =
     login:'',		// login
     password:'',    // password hash
     role:0,         // 0 - regular user, 1 - admin
-    emails:[],      // may be several emails
+    email: '',      //
     phone:''
 };
 
@@ -247,11 +247,14 @@ ApiController.getBanners = function(callback) {
     ApiController.driver.getDocs('banners', {}, callback);
 }
 
-ApiController.prototype.searchPlans = function (criteria, callback) {
+ApiController.prototype.searchPlans = function (criteria, order_by, callback) {
     var query = JSON.parse(criteria);    // create JSON from string
     // 
-    console.log('query.htype =' + query.htype);
-    ApiController.driver.getDocsSorted('plans', query, { adv_price: 1}, callback);
+    if (order_by == null)
+        ApiController.driver.getDocsSorted('plans', query, { advprice: 1}, callback);
+    else {
+        ApiController.driver.getDocsSorted('plans', query, order_by, callback);
+    }
 }
 
 ApiController.prototype.plansProvider = function (provider, callback) {

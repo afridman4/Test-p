@@ -89,6 +89,7 @@ app.get('/api/0.1/banners', api.banners);
 app.get('/api/0.1/banners/:n', api.bannersN);
 // plans
 app.get('/api/0.1/plans/search/:criteria', api.plansSearch);
+app.get('/api/0.1/plans/search/:criteria/:order_by', api.plansSearch);
 //app.get('/api/0.1/plans/search/:criteria/count', api.plansSearchCount);
 //app.get('/api/0.1/plans/search/:criteria/sort/:sorting/page/:length/:n', api.plansSearchPaged);
 app.get('/api/0.1/plans/:provider', api.plansProvider);

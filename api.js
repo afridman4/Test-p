@@ -273,8 +273,12 @@ exports.banners = function (req, res) {
 };
 
 exports.plansSearch = function (req, res) {
-    console.log('search plans: ' + req.param("criteria"));
-    apiController.searchPlans(req.param("criteria"), function (error, plans) {
+    console.log('search plans: ' + req.param("criteria")+'order by: '+req.param("order_by"));
+    var order = null;
+    if (req.param("order_by") != null) {
+        order = JSON.parse('{\"' + req.param("order_by") + '\":1}');
+    }
+    apiController.searchPlans(req.param("criteria"), order, function (error, plans) {
         if (error) {
             res.send(404, error);
         } else {
@@ -459,7 +463,7 @@ exports.testSavePlan = function (req, res) {
         postalCode: '101101'
     };
     p.phoneNumbers = ["812 123-1234", "916 123-4567"];
-    p.adv_price = 4.99;
+    p.advprice = 4.99;
 
     apiController.savePlan(p,
         function (error, docs) {
