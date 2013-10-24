@@ -379,6 +379,16 @@ exports.providers = function (req, res) {
     })
 };
 
+exports.provider = function (req, res) {
+    console.log('get provider: ' + req.param("provider"));
+    apiController.provider(req.param("provider"), function (error, providers) {
+        if (error) {
+            res.send(404, error);
+        }
+        res.send(200, providers);
+    })
+};
+
 //
 // Test section
 //

@@ -330,6 +330,11 @@ ApiController.prototype.getProviders = function(callback) {
     ApiController.driver.getDocs('providers', {}, callback);
 }
 
+ApiController.prototype.provider = function(provider, callback) {
+    ApiController.driver.getDocs('providers', {provider: provider}, callback);
+};
+
+
 ApiController.prototype.saveUser = function (user, callback) {
     console.log("saveUser");
     ApiController.driver.saveOneDoc('users', {login: user.login}, user, callback);

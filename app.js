@@ -96,6 +96,7 @@ app.get('/api/0.1/plans/:provider', api.plansProvider);
 app.get('/api/0.1/plan/:provider/:planName', api.plan);
 // providers
 app.get('/api/0.1/providers', api.providers);
+app.get('/api/0.1/provider/:provider', api.provider);
 // users
 app.get('/api/0.1/user/:login', api.user);
 app.get('/api/0.1/users/search/:criteria', api.usersSearch);
