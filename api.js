@@ -423,6 +423,7 @@ exports.testSaveReview = function (req, res) {
     f.plan = 'webhosting2';
     f.generalratings = 1;
     f.text = 'wrwrwrwr';
+    f.ratings[1].rate = 9;
 
     apiController.saveReview(
         f,

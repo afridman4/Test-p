@@ -1,12 +1,9 @@
 // generic apiProvider
 
 var Driver = require('./mongodb-driver').Driver;
-// var winston = require('winston');
 var assert = require('assert');
 var querystring = require('querystring');
 
-// winston.add(winston.transports.File, { filename: './output.log'});
-// console.log('Added winston transport');
 /*
 //    Templates for various records
 */
@@ -32,6 +29,13 @@ var PLAN_TEMPLATE =
 		}],
    generalrating: 0,               //  integral rating from 0 to 10
    numberofreviews: 0,
+   ratings: [                       // array of specific ratings
+        { name: "service", rate: 0 },
+        { name: "relability", rate: 0 },
+        { name: "performance", rate: 0 },
+        { name: "ease of use", rate: 0 },
+        { name: "feature set", rate: 0 }
+   ],
    description: '',
    advprice: 9.99
 };
@@ -52,6 +56,13 @@ var PROVIDER_TEMPLATE =
     phonenumbers: [],
     generalrating: 0,
     numberofreviews: 0,
+    ratings: [                       // array of specific ratings
+        { name: "service", rate: 0 },
+        { name: "relability", rate: 0 },
+        { name: "performance", rate: 0 },
+        { name: "ease of use", rate: 0 },
+        { name: "feature set", rate: 0 }
+    ],
     description: ''
 };
 
@@ -200,21 +211,52 @@ ApiController.prototype.removeReview = function( id, callback) {
     ApiController.driver.removeDocById('reviews', id, callback);
 };
 
-ApiController.prototype.updatePlanRatings = function (provider, plan, rating) {
+ApiController.prototype.updatePlanRatings = function (provider, plan, generalrating, ratings) {
     ApiController.driver.getDocs('plans', {provider: provider, planname: plan}, function (err, result){
         if (err == null && result != null && result.length > 0) {
-            result[0].generalrating = (result[0].generalrating * result[0].numberofreviews + rating)/(result[0].numberofreviews + 1);
+            result[0].generalrating = (result[0].generalrating * result[0].numberofreviews + generalrating)/(result[0].numberofreviews + 1);
             result[0].numberofreviews++;
+
+            if (typeof(result[0].ratings) == "undefined" || result[0].ratings == null || result[0].ratings.length == 0)
+            {
+                result[0].ratings = REVIEW_TEMPLATE.ratings;
+            }
+
+            for (var i = 0; i < result[0].ratings.length; i++) {
+                for (var j = 0; j < ratings.length; j++) {
+                    if (ratings[j].name == result[0].ratings[i].name) {
+                        if (ratings[j].rate > 0)
+                            result[0].ratings[i].rate = (result[0].ratings[i].rate * result[0].numberofreviews + ratings[j].rate)/(result[0].numberofreviews + 1);
+                        break;
+                    }
+                }
+            }
             ApiController.driver.saveOneDoc('plans',{provider: provider, planname: plan}, result[0], function(err, docs){ });
         }
     })
 };
 
-ApiController.prototype.updateProviderRatings = function (provider, rating) {
+ApiController.prototype.updateProviderRatings = function (provider, generalrating, ratings) {
     ApiController.driver.getDocs('providers', {provider: provider}, function (err, result){
         if (err == null && result != null && result.length > 0) {
-            result[0].generalrating = (result[0].generalrating * result[0].numberofreviews + rating)/(result[0].numberofreviews + 1);
+            result[0].generalrating = (result[0].generalrating * result[0].numberofreviews + generalrating)/(result[0].numberofreviews + 1);
             result[0].numberofreviews++;
+
+            if (typeof(result[0].ratings) == "undefined" || result[0].ratings == null || result[0].ratings.length == 0)
+            {
+                result[0].ratings = REVIEW_TEMPLATE.ratings;
+            }
+
+            for (var i = 0; i < result[0].ratings.length; i++) {
+                for (var j = 0; j < ratings.length; j++) {
+                    if (ratings[j].name == result[0].ratings[i].name){
+                        if (ratings[j].rate > 0)
+                            result[0].ratings[i].rate = (result[0].ratings[i].rate * result[0].numberofreviews + ratings[j].rate)/(result[0].numberofreviews + 1);
+                        break;
+                    }
+                }
+            }
+
             ApiController.driver.saveOneDoc('providers',{provider: provider}, result[0], function(err, docs){ });
         }
     })
@@ -223,10 +265,15 @@ ApiController.prototype.updateProviderRatings = function (provider, rating) {
 ApiController.prototype.saveReview = function (review, callback) {
     ApiController.driver.saveDocs('reviews', review, callback);
 
-    if (review.plan != null)
-        this.updatePlanRatings(review.provider, review.plan, review.generalratings);
+    if (typeof(review.ratings) == "undefined" || review.ratings == null || review.ratings.length == 0)
+    {
+        review.ratings = REVIEW_TEMPLATE.ratings;
+    }
 
-    this.updateProviderRatings(review.provider, review.generalratings);
+    if (review.plan != null)
+        this.updatePlanRatings(review.provider, review.plan, review.generalratings, review.ratings);
+
+    this.updateProviderRatings(review.provider, review.generalratings, review.ratings);
 }
 
 ApiController.prototype.getFeatures = function (htype_name, callback) {
