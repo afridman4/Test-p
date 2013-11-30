@@ -31,7 +31,7 @@ var PLAN_TEMPLATE =
    numberofreviews: 0,
    ratings: [                       // array of specific ratings
         { name: "service", rate: 0 },
-        { name: "relability", rate: 0 },
+        { name: "reliability", rate: 0 },
         { name: "performance", rate: 0 },
         { name: "ease of use", rate: 0 },
         { name: "feature set", rate: 0 }
@@ -215,7 +215,6 @@ ApiController.prototype.updatePlanRatings = function (provider, plan, generalrat
     ApiController.driver.getDocs('plans', {provider: provider, planname: plan}, function (err, result){
         if (err == null && result != null && result.length > 0) {
             result[0].generalrating = (result[0].generalrating * result[0].numberofreviews + generalrating)/(result[0].numberofreviews + 1);
-            result[0].numberofreviews++;
 
             if (typeof(result[0].ratings) == "undefined" || result[0].ratings == null || result[0].ratings.length == 0)
             {
@@ -231,6 +230,9 @@ ApiController.prototype.updatePlanRatings = function (provider, plan, generalrat
                     }
                 }
             }
+
+            result[0].numberofreviews++;
+
             ApiController.driver.saveOneDoc('plans',{provider: provider, planname: plan}, result[0], function(err, docs){ });
         }
     })
@@ -240,7 +242,6 @@ ApiController.prototype.updateProviderRatings = function (provider, generalratin
     ApiController.driver.getDocs('providers', {provider: provider}, function (err, result){
         if (err == null && result != null && result.length > 0) {
             result[0].generalrating = (result[0].generalrating * result[0].numberofreviews + generalrating)/(result[0].numberofreviews + 1);
-            result[0].numberofreviews++;
 
             if (typeof(result[0].ratings) == "undefined" || result[0].ratings == null || result[0].ratings.length == 0)
             {
@@ -256,6 +257,8 @@ ApiController.prototype.updateProviderRatings = function (provider, generalratin
                     }
                 }
             }
+
+            result[0].numberofreviews++;
 
             ApiController.driver.saveOneDoc('providers',{provider: provider}, result[0], function(err, docs){ });
         }
