@@ -238,7 +238,7 @@ exports.removePlan = function (req, res){
 
 exports.reviewsShortRecent = function (req, res) {
     console.log('get short reviews: ' + req.param("n"));
-    apiController.getRecentShortReviews(req.param("n"), function (error, reviews) {
+    apiController.getRecentShortReviews(req.param("n"), req.param("user"), function (error, reviews) {
         if (error) {
             res.send(404, error);
         }
@@ -247,6 +247,23 @@ exports.reviewsShortRecent = function (req, res) {
             reviews[i].text = reviews[i].text.substr(0, length);
         }
         res.send(200, reviews);
+    });
+};
+
+exports.review = function (req, res){
+    console.log("getting review id="+req.param("id"));
+    apiController.getReview(req.param("id"),function (error, doc) {
+        if (error) {
+            res.send(500, error);
+        } else {
+
+            if (doc == null) {
+                res.send(404, "Review not found");
+            }
+            else {
+                res.send(200, doc);
+            }
+        }
     });
 };
 

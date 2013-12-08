@@ -82,8 +82,10 @@ app.get('/api/0.1/features/:htype', api.features);
 app.get('/api/0.1/features/:htype/:fname', api.feature);
 // reviews
 app.get('/api/0.1/reviews/short/recent/:n', api.reviewsShortRecent);
-app.get('/api/0.1/reviews/:provider/:planName', api.reviewsProviderPlan)
+app.get('/api/0.1/reviews/short/recent/:user/:n', api.reviewsShortRecent);
+app.get('/api/0.1/reviews/:provider/:planName', api.reviewsProviderPlan);
 app.get('/api/0.1/reviews', api.reviews);
+app.get('/api/0.1/review/:id', api.review);
 // banners
 app.get('/api/0.1/banners', api.banners);
 app.get('/api/0.1/banners/:n', api.bannersN);

@@ -109,6 +109,21 @@ Driver.prototype.getDocs = function (collection_name, query, callback) {
     });
 };
 
+Driver.prototype.getDocById = function (collection_name, id, callback) {
+    console.log("Call getDoc id="+id);
+    this.getCollection(collection_name, function (error, collection) {
+        if (error) callback(error)
+        else {
+                collection.findOne({_id:ObjectID(id)}, (function (error, doc) {
+                if (error) callback(error)
+                else {
+                    callback(null, doc)
+                }
+            }));
+        }
+    });
+};
+
 Driver.prototype.getDocsSorted = function (collection_name, query, sort_by, callback) {
     console.log("Call getDocs with options");
     this.getCollection(collection_name, function (error, collection) {

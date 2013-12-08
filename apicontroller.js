@@ -132,6 +132,11 @@ ApiController.prototype.getReviews = function (callback) {
     ApiController.driver.getDocs('reviews', {}, callback);
 };
 
+ApiController.prototype.getReview = function (id, callback) {
+    ApiController.driver.getDocById('reviews', id, callback);
+};
+
+
 ApiController.prototype.getReviewsPlanProvider = function (providerName, planName, callback) {
     ApiController.driver.getDocs('reviews', {provider:providerName, plan:planName}, callback);
 };
@@ -372,8 +377,12 @@ ApiController.prototype.getTemplate = function(t) {
     }
 }
 
-ApiController.prototype.getRecentShortReviews = function (n, callback) {
-    ApiController.driver.getRecentNDocs('reviews', {}, n, callback);
+ApiController.prototype.getRecentShortReviews = function (n, user, callback) {
+    if (user == null) {
+        ApiController.driver.getRecentNDocs('reviews', {}, n, callback);
+    } else {
+        ApiController.driver.getRecentNDocs('reviews', {author:user}, n, callback);
+    }
 }
 
 ApiController.prototype.getProviders = function(callback) {
