@@ -58,7 +58,7 @@ var PROVIDER_TEMPLATE =
     numberofreviews: 0,
     ratings: [                       // array of specific ratings
         { name: "service", rate: 0 },
-        { name: "relability", rate: 0 },
+        { name: "reliability", rate: 0 },
         { name: "performance", rate: 0 },
         { name: "ease of use", rate: 0 },
         { name: "feature set", rate: 0 }
@@ -91,7 +91,7 @@ var REVIEW_TEMPLATE =
     provider: '',
     plan: '',
     generalratings: 0,
-    ratings: [{ name: "service", rate: 0 }, { name: "relability", rate: 0 },
+    ratings: [{ name: "service", rate: 0 }, { name: "reliability", rate: 0 },
               { name: "performance", rate: 0 }, { name: "ease of use", rate: 0 },
               { name: "feature set", rate: 0 }],
     text: ''

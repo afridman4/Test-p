@@ -145,7 +145,8 @@ app.get('/api/test/saveplan', api.testSavePlan);
 app.get('/api/test/savebanner', api.testSaveBanner);
 
 /*
-app.get('/api/test/checkplanfeatures', function (req, res) {
+
+app.get('/api/test/checkplan0features', function (req, res) {
     apiController.checkPlanFeatures(
     { 
         provider: 'hostgator',
