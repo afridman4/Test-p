@@ -278,6 +278,17 @@ exports.bannersN = function (req, res) {
     });
 };
 
+exports.bannersRandomN = function (req, res) {
+    console.log('get random banners: ' + req.param("n") + " height " + req.param("dimension"));
+    apiController.getRandomNBanners(req.param("n"), req.param("dimension"), function (error, banners) {
+        if (error) {
+            res.send(404, error);
+        } else {
+            res.send(200, banners);
+        }
+    });
+};
+
 exports.banners = function (req, res) {
     console.log('get banners: ' + req.param("n"));
     apiController.getBanners(req.param("n"), function (error, banners) {
@@ -482,6 +493,7 @@ exports.testSavePlan = function (req, res) {
     p.email_accounts = 5;
     p.os = ["windows", "linux"];
     p.database = ["mySQL", "Postgress"];
+    p.short_description = "Domain registration (free), Disk space (unlimited), Bandwidth (unlimited)";
     p.description = "Domain registration (free), Disk space (unlimited), Bandwidth (unlimited), SSL Certificate, Dedicated IP�number (1-2 or 3)";
     p.features = ["SSL Certificate", "Website statistics"];
     p.shoping_cart = ["osCommerce", "ZenCart", "Cube Cart"];

@@ -149,6 +149,30 @@ Driver.prototype.getRecentNDocs = function (collection_name, query, n, callback)
     });
 };
 
+Driver.prototype.getRandomNDocs = function (collection_name, query, n, callback) {
+    this.getCollection(collection_name, function (error, collection) {
+        if (error) callback(error)
+        else {
+            collection.count({}, function (err, count) {
+                console.log("getRandomNDocs count " + count + " query " + query.height);
+                if (err) callback(err)
+                else {
+                    if (count == 0)
+                        callback(null, null);
+                    else {
+                        var nskip = (count > n) ? Math.floor(Math.random()*(count - n)) : 0;
+                        console.log("skip " + nskip + " out of "+ count);
+                        collection.find(query, { limit: n, sort: { time: 1 }, skip: nskip }).toArray(function (error, results) {
+                            if (error) callback(error)
+                            else callback(null, results)
+                        });
+                    }
+                }
+            })
+        }
+    });
+};
+
 Driver.prototype.saveDocs = function (collection_name, docs, callback) {
     this.getCollection(collection_name, function (error, docs_collection) {
         if (error) callback(error)
@@ -184,6 +208,9 @@ Driver.prototype.saveOneDoc = function (collection_name, selector, doc, callback
                     else
                         selector = {_id: doc._id};
                 }
+
+                if (doc._id != null)
+                    delete doc._id;
 
                 doc_collection.update(selector, doc, {upsert:true, w: 1}, function (err, results) {
                     if (err) {

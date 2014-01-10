@@ -89,6 +89,7 @@ app.get('/api/0.1/review/:id', api.review);
 // banners
 app.get('/api/0.1/banners', api.banners);
 app.get('/api/0.1/banners/:n', api.bannersN);
+app.get('/api/0.1/banners/random/:dimension/:n', api.bannersRandomN);
 // plans
 app.get('/api/0.1/plans/search/:criteria', api.plansSearch);
 app.get('/api/0.1/plans/search/:criteria/:order_by', api.plansSearch);

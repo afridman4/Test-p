@@ -10,7 +10,7 @@ var querystring = require('querystring');
 var HTYPE_TEMPLATE =
 {
     name: 'default',
-	displayname: 'default',
+	display_name: 'default',
     description: '',
 	keywords: ['']
 };
@@ -36,6 +36,7 @@ var PLAN_TEMPLATE =
         { name: "ease of use", rate: 0 },
         { name: "feature set", rate: 0 }
    ],
+   short_description: '',
    description: '',
    advprice: 9.99
 };
@@ -100,7 +101,10 @@ var REVIEW_TEMPLATE =
 var BANNER_TEMPLATE =
 {
     htmlcode: '<html></html>',       // banner code
-    alttext:''
+    alttext:'',
+    height: 250,                    // banner height (we support 250 and 60)
+    priority: 0,                     // priority - most important first
+    time: 0
 };
 
 var USER_TEMPLATE =
@@ -203,6 +207,13 @@ ApiController.prototype.saveFeature = function (feature, callback) {
 
 ApiController.prototype.saveBanner = function (banner, callback) {
     console.log("saveBanner");
+    if (typeof (banner.height) == "undefined")
+        banner.height = 250;
+    if (typeof (banner.priority) == "undefined")
+        banner.priority = 0;
+    if (typeof (banner.time) == "undefined")
+        banner.time = new Date();
+
     ApiController.driver.saveOneDoc('banners', null, banner, callback);
 }
 
@@ -296,6 +307,10 @@ ApiController.prototype.getFeature = function (htype_name, feature_name, callbac
 // TODO maybe priority, or... because I do not know yet this logic, postponed implementation
 ApiController.prototype.getNBanners = function (n, callback) {
     ApiController.driver.getRecentNDocs('banners', {}, n, callback);
+}
+
+ApiController.prototype.getRandomNBanners = function (n, h, callback) {
+    ApiController.driver.getRandomNDocs('banners', {"height": parseInt(h)}, n, callback);
 }
 
 ApiController.getBanners = function(callback) {
