@@ -93,7 +93,7 @@ app.get('/api/0.1/banners/random/:dimension/:n', api.bannersRandomN);
 // plans
 app.get('/api/0.1/plans/search/:criteria', api.plansSearch);
 app.get('/api/0.1/plans/search/:criteria/:order_by', api.plansSearch);
-//app.get('/api/0.1/plans/search/:criteria/count', api.plansSearchCount);
+app.get('/api/0.1/bestplans/:n', api.plansSearchBest);
 //app.get('/api/0.1/plans/search/:criteria/sort/:sorting/page/:length/:n', api.plansSearchPaged);
 app.get('/api/0.1/plans/:provider', api.plansProvider);
 app.get('/api/0.1/plan/:provider/:planName', api.plan);

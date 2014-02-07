@@ -71,7 +71,7 @@ var FEATURE_TEMPLATE =
 {
     htype: 'default',   // for what htype is applicable
 	name:'default',
-    display:'description',
+    displayname:'description',
     type:'',		// actually this is enum int, bool (yes, no), string, oneof, enum,
     ismultiple:0,   // allow multiple choice
 	unit:'',		// unit of measurement, like Mb, Hz, etc.
@@ -230,6 +230,11 @@ ApiController.prototype.removeReview = function( id, callback) {
 ApiController.prototype.updatePlanRatings = function (provider, plan, generalrating, ratings) {
     ApiController.driver.getDocs('plans', {provider: provider, planname: plan}, function (err, result){
         if (err == null && result != null && result.length > 0) {
+            if (typeof (result[0].generalrating) == "undefined")
+                    result[0].generalrating = 0;
+            if (typeof (result[0].numberofreviews) == "undefined")
+                    result[0].numberofreviews = 0;
+
             result[0].generalrating = (result[0].generalrating * result[0].numberofreviews + generalrating)/(result[0].numberofreviews + 1);
 
             if (typeof(result[0].ratings) == "undefined" || result[0].ratings == null || result[0].ratings.length == 0)
@@ -257,6 +262,11 @@ ApiController.prototype.updatePlanRatings = function (provider, plan, generalrat
 ApiController.prototype.updateProviderRatings = function (provider, generalrating, ratings) {
     ApiController.driver.getDocs('providers', {provider: provider}, function (err, result){
         if (err == null && result != null && result.length > 0) {
+            if (typeof (result[0].generalrating) == "undefined")
+                result[0].generalrating = 0;
+            if (typeof (result[0].numberofreviews) == "undefined")
+                result[0].numberofreviews = 0;
+
             result[0].generalrating = (result[0].generalrating * result[0].numberofreviews + generalrating)/(result[0].numberofreviews + 1);
 
             if (typeof(result[0].ratings) == "undefined" || result[0].ratings == null || result[0].ratings.length == 0)
@@ -319,13 +329,18 @@ ApiController.getBanners = function(callback) {
 
 ApiController.prototype.searchPlans = function (criteria, order_by, callback) {
     var query = JSON.parse(criteria);    // create JSON from string
-    // 
+    console.log("Search plans by:"+criteria);
     if (order_by == null)
         ApiController.driver.getDocsSorted('plans', query, { advprice: 1}, callback);
     else {
         ApiController.driver.getDocsSorted('plans', query, order_by, callback);
     }
 }
+
+ApiController.prototype.searchBestPlans = function (n, callback) {
+        ApiController.driver.getDocsOptions('plans', {}, { limit: n, sort: { generalrating: -1 }}, callback);
+}
+
 
 ApiController.prototype.plansProvider = function (provider, callback) {
     ApiController.driver.getDocs('plans', { "provider" : provider}, callback);
@@ -364,6 +379,17 @@ ApiController.prototype.checkPlanFeatures = function (plan, callback) {
 
 ApiController.prototype.savePlan = function (plan, callback) {
     plan.created = new Date();
+    // modify plan for specific cases
+    // 1. VPS performance - could set feature cpu, could be cpufreq
+    //     we add value ANY to the feature that was not set explicitely
+
+    if (plan.htype == "VPS") {
+        if ((typeof (plan.cpu) != "undefined") && (typeof (plan.cpufreq) == "undefined"))
+            plan.cpufreq = 'UNSPECIFIED';
+        else if ((typeof (plan.cpu) == "undefined") && (typeof (plan.cpufreq) != "undefined"))
+            plan.cpu = 'UNSPECIFIED';
+    }
+
     ApiController.driver.saveOneDoc('plans', {planname: plan.planname, provider: plan.provider},  plan, callback);
 }
 

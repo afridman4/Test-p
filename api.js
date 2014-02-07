@@ -315,6 +315,18 @@ exports.plansSearch = function (req, res) {
     });
 };
 
+exports.plansSearchBest = function (req, res) {
+    console.log('search best plans: ' + req.param("n"));
+
+    apiController.searchBestPlans(req.param("n"), function (error, plans) {
+        if (error) {
+            res.send(404, error);
+        } else {
+            res.send(200, plans);
+        }
+    });
+};
+
 exports.usersSearch = function (req, res) {
     console.log('search users: ' + req.param("criteria"));
     apiController.searchUsers(req.param("criteria"), function (error, plans) {

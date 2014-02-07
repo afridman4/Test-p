@@ -16,7 +16,7 @@ Driver = function () {
         assert.ok(db != null);
         Driver.db = db;
         console.log('Connected to MongoDB');
-        initDb(Driver.db);
+//        initDb(Driver.db);
     });
 
 }
@@ -137,6 +137,19 @@ Driver.prototype.getDocsSorted = function (collection_name, query, sort_by, call
     });
 };
 
+Driver.prototype.getDocsOptions = function (collection_name, query, options, callback) {
+    console.log("Call getDocs with options");
+    this.getCollection(collection_name, function (error, collection) {
+        if (error) callback(error)
+        else {
+            collection.find(query, options).toArray(function (error, results) {
+                if (error) callback(error)
+                else callback(null, results)
+            });
+        }
+    });
+};
+
 Driver.prototype.getRecentNDocs = function (collection_name, query, n, callback) {
     this.getCollection(collection_name, function (error, collection) {
         if (error) callback(error)
@@ -153,7 +166,7 @@ Driver.prototype.getRandomNDocs = function (collection_name, query, n, callback)
     this.getCollection(collection_name, function (error, collection) {
         if (error) callback(error)
         else {
-            collection.count({}, function (err, count) {
+            collection.count(query, function (err, count) {
                 console.log("getRandomNDocs count " + count + " query " + query.height);
                 if (err) callback(err)
                 else {
