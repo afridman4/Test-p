@@ -146,14 +146,14 @@ var data = [
                 displayname:'Database',
                 description:"Web application or web site usually requires database to store information",
                 type:'multiple',		// actually this is enum int, bool (yes, no), string, multiple (enum),
-                ismultiple:false,   // allow multiple choice
+                ismultiple:true,   // allow multiple choice
                 unit:'',		// unit of measurement, like Mb, Hz, etc.
                 maxvalue: 0,
                 minvalue: 0,
                 defaultvalue:0,
                 hasany: true,		// should show Any in the dialog, applicable for int, enum (for enum means at least one from selected
                 hasunlimited:false,	// should show Unlimited
-                values: ['MySQL', 'PostgresSQL', 'MongoDB'],	        // for enum list of possible values
+                values: ['MySQL', 'PostgresSQL', 'MongoDB', 'MSSQL'],	        // for enum list of possible values
                 hasall:false,		// for enum option 'all selected'
                 operation:'eq'	    // how to compare int  'le', 'ge' or 'eq'
             },
@@ -225,7 +225,7 @@ var data = [
                 htype: 'WEB',
                 name:'ipaddresses',
                 displayname:'IP Addresses',
-                description:'YOur site can be accesses by multiple IP addresses',
+                description:'Your site can be accesses by multiple IP addresses',
                 type:'int',		// actually this is enum int, bool (yes, no), string, oneof, enum,
                 ismultiple:false,   // allow multiple choice
                 unit:'',		// unit of measurement, like Mb, Hz, etc.
@@ -237,6 +237,24 @@ var data = [
                 hasall:false,		// for enum option 'all selected'
                 operation:'gt'	    // how to compare int  'le', 'ge' or 'eq'
             },
+            {
+                htype: 'WEB',
+                name:'sslcertificate',
+                displayname:'SSL Certificate',
+                description:"A private SSL will act as a secure layer between your visitors and your web site. It will encrypt information such as Credit Cards which will give your visitors the confidence to make purchases on your website. Web sites that are e-commerce based are generally required to have an SSL to accept credit cards.",
+                type:'multiple',		// actually this is enum int, bool (yes, no), string, multiple (enum),
+                ismultiple:false,   // allow multiple choice
+                unit:'',		// unit of measurement, like Mb, Hz, etc.
+                maxvalue: 0,
+                minvalue: 0,
+                defaultvalue:0,
+                hasany: true,		// should show Any in the dialog, applicable for int, enum (for enum means at least one from selected
+                hasunlimited:false,	// should show Unlimited
+                values: ['Private', 'Shared'],	        // for enum list of possible values
+                hasall:false,		// for enum option 'all selected'
+                operation:'eq'	    // how to compare int  'le', 'ge' or 'eq'
+            },
+
 //************************************************
 // VPS features
 //************************************************
@@ -272,6 +290,23 @@ var data = [
                 hasall:false,		// for enum option 'all selected'
                 operation:'gt'	    // how to compare int  'le', 'ge' or 'eq'
             },
+            {
+                htype: 'VPS',
+                name:'domainsallowed',
+                displayname:'Domains Allowed',
+                description:'How many domains allowed to be hosted on one single account',
+                type:'int',		// actually this is enum int, bool (yes, no), string, oneof, enum,
+                ismultiple:false,   // allow multiple choice
+                unit:'',		// unit of measurement, like Mb, Hz, etc.
+                maxvalue: 500,
+                minvalue: 0,
+                defaultvalue:0,
+                hasany: false,		// should show Any in the dialog, applicable for int, enum (for enum means at least one from selected
+                hasunlimited:true,	// should show Unlimited
+                hasall:false,		// for enum option 'all selected'
+                operation:'gt'	    // how to compare int  'le', 'ge' or 'eq'
+            },
+
             {
                 htype: 'VPS',
                 name:'cpu',
@@ -422,7 +457,7 @@ var data = [
             },
             {
                 htype: 'DEDIC',
-                name:'cpu',
+                name:'cputype',
                 displayname:'CPU type',
                 description:'CPU type defines performance of your computer',
                 type:'multiple',		// actually this is enum int, bool (yes, no), string, multiple (enum),
@@ -439,7 +474,7 @@ var data = [
             },
             {
                 htype: 'DEDIC',
-                name:'cpucores',
+                name:'cpu',
                 displayname:'CPU Cores',
                 description:"More CPU cores, more application can run in parallel",
                 type:'int',		// actually this is enum int, bool (yes, no), string, oneof, enum,
@@ -493,6 +528,38 @@ var data = [
                 type:'int',		// actually this is enum int, bool (yes, no), string, oneof, enum,
                 ismultiple:0,   // allow multiple choice
                 unit:'Gb',		// unit of measurement, like Mb, Hz, etc.
+                maxvalue: 500,
+                minvalue: 0,
+                defaultvalue:0,
+                hasany: false,		// should show Any in the dialog, applicable for int, enum (for enum means at least one from selected
+                hasunlimited:true,	// should show Unlimited
+                hasall:false,		// for enum option 'all selected'
+                operation:'gt'	    // how to compare int  'le', 'ge' or 'eq'
+            },
+            {
+                htype: 'DEDIC',
+                name:'ipaddresses',
+                displayname:'IP Addresses',
+                description:'',
+                type:'int',		// actually this is enum int, bool (yes, no), string, oneof, enum,
+                ismultiple:false,   // allow multiple choice
+                unit:'',		// unit of measurement, like Mb, Hz, etc.
+                maxvalue: 500,
+                minvalue: 0,
+                defaultvalue:0,
+                hasany: false,		// should show Any in the dialog, applicable for int, enum (for enum means at least one from selected
+                hasunlimited:false,	// should show Unlimited
+                hasall:false,		// for enum option 'all selected'
+                operation:'gt'	    // how to compare int  'le', 'ge' or 'eq'
+            },
+            {
+                htype: 'DEDIC',
+                name:'domainsallowed',
+                displayname:'Domains Allowed',
+                description:'How many domains allowed to be hosted on one single account',
+                type:'int',		// actually this is enum int, bool (yes, no), string, oneof, enum,
+                ismultiple:false,   // allow multiple choice
+                unit:'',		// unit of measurement, like Mb, Hz, etc.
                 maxvalue: 500,
                 minvalue: 0,
                 defaultvalue:0,
@@ -606,7 +673,7 @@ var data = [
             },
             {
                 htype: 'CLOUD',
-                name:'cpucores',
+                name:'cpu',
                 displayname:'CPU Cores',
                 description:"More CPU cores, more application can run in parallel",
                 type:'int',		// actually this is enum int, bool (yes, no), string, oneof, enum,
@@ -654,11 +721,6 @@ var data = [
             }
         ]} ,
 
-    {'collectionName':'banners',
-        values: [
-            {'name':'name1', 'value':'first value'},
-            {'name':'name2', 'value':'second value'}
-        ]},
     {'collectionName': 'users',
         values: [
             {"email" : "admin@admin.com",
@@ -715,7 +777,6 @@ loadDbCollection = function (db, collectionName, values) {
         }
     }
 }
-
 
 db = connect("localhost:27017/node-bwch");
 initDb(db);

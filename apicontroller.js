@@ -328,8 +328,9 @@ ApiController.getBanners = function(callback) {
 }
 
 ApiController.prototype.searchPlans = function (criteria, order_by, callback) {
-    var query = JSON.parse(criteria);    // create JSON from string
+    criteria = criteria.replace(new RegExp('ZZ[a-z]+YY','g'),'$or');
     console.log("Search plans by:"+criteria);
+    var query = JSON.parse(criteria);    // create JSON from string
     if (order_by == null)
         ApiController.driver.getDocsSorted('plans', query, { advprice: 1}, callback);
     else {
