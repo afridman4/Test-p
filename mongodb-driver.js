@@ -173,7 +173,7 @@ Driver.prototype.getRandomNDocs = function (collection_name, query, n, callback)
                     if (count == 0)
                         callback(null, null);
                     else {
-                        var nskip = (count > n) ? Math.floor(Math.random()*(count - n)) : 0;
+                        var nskip = (count > n) ? Math.floor(Math.random()*(count - n + 1)) : 0;
                         console.log("skip " + nskip + " out of "+ count);
                         collection.find(query, { limit: n, sort: { time: 1 }, skip: nskip }).toArray(function (error, results) {
                             if (error) callback(error)

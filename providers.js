@@ -28,6 +28,21 @@ var providers = [
     "description" : "In 1999 we began supporting our first hosting customers on a server in someone's living room, and since then we have grown into a company with over 110,000 clients hosting over 470,000 sites with us. What does this mean for you? Not only do we know what we're doing, but you're not going to have to worry about changing hosting companies because we're not going anywhere.",
     "generalrating" : 0,
     "numberofreviews" : 0
+},
+{
+    "provider" : "BurstNET",
+    "affiliation" : true,
+     "affiliationlink" : "https://service.burst.net/aff.php?aff=5894",
+     "street" : "PO Box 591",
+     "city" : "Scranton",
+     "state" : "PA",
+     "postalcode" : "18501",
+     "country" : "USA",
+     "website" : "www.burst.net",
+     "phonenumbers" : "1-877-BURSTNET",
+     "description" : "BurstNET Technologies, Inc.™ is a world-wide leader in Web Hosting and Internet Solutions. The privately held company, based in North-Eastern Pennsylvania, services clientele in over 100 countries around the world. BurstNET® began in 1991 as a computer hardware/software retail firm and distributorship. Shortly after incorporating in late 1996, the company quickly made the transition to providing Internet services. BurstNET® established itself in the industry prior to the explosion of the Web Hosting market. The company has experienced exceptional growth and currently hosts 10000+ Dedicated Servers and Co-located machines, 20000+ Virtual Private Servers (VPS), and millions of websites",
+     "generalrating" : 0,
+     "numberofreviews" : 0
 }
 ];
 

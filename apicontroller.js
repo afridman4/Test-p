@@ -123,6 +123,35 @@ ApiController = function (dbDriver) {
     ApiController.driver = dbDriver;
 }
 
+var featuresInts = [];
+
+findInFeaturesInts = function(name)
+{
+    for (var i = 0; i < featuresInts.length; i++)
+        if (featuresInts[i]==name)
+            return i;
+
+    return -1;
+}
+
+loadFeatures = function(driver)
+{
+    driver.getDocs('features', {}, function (error, features) {
+        if (error) {
+            ;
+        } else {
+            console.log("Loaded features "+features.length);
+            for (var i = 0; i < features.length; i++) {
+                if (features[i].type == 'int') {
+                    if (findInFeaturesInts(features[i].name) < 0)
+                        featuresInts.push(features[i].name);
+                }
+            }
+            console.log("Save int features "+featuresInts.length);
+        }
+    })
+}
+
 ApiController.prototype.getHtypes = function (callback) {
     ApiController.driver.getDocsSorted('htypes', {}, { sort_order: 1}, callback);
 };
@@ -142,7 +171,14 @@ ApiController.prototype.getReview = function (id, callback) {
 
 
 ApiController.prototype.getReviewsPlanProvider = function (providerName, planName, callback) {
-    ApiController.driver.getDocs('reviews', {provider:providerName, plan:planName}, callback);
+
+    console.log("Get reviews: "+ providerName +":"+planName+":");
+    if (providerName.length == 0)
+        ApiController.driver.getDocs('reviews', {plan:planName}, callback);
+    else if (planName.length == 0)
+        ApiController.driver.getDocs('reviews', {provider:providerName}, callback);
+    else
+        ApiController.driver.getDocs('reviews', {provider:providerName, plan:planName}, callback);
 };
 
 ApiController.prototype.saveHtypes = function (htypes, callback) {
@@ -202,6 +238,13 @@ ApiController.prototype.removeProvider = function( name, callback) {
 
 ApiController.prototype.saveFeature = function (feature, callback) {
     console.log("saveFeature");
+    if (featuresInts.length == 0) {
+        loadFeatures(ApiController.driver);
+    }
+
+    if (feature.type == "int")
+        featuresInts.push(feature.name);
+
     ApiController.driver.saveOneDoc('features', {htype:feature.htype, name:feature.name}, feature, callback);
 }
 
@@ -380,6 +423,25 @@ ApiController.prototype.checkPlanFeatures = function (plan, callback) {
 
 ApiController.prototype.savePlan = function (plan, callback) {
     plan.created = new Date();
+
+    // make sure that int features are saved as numbers
+    // fix for  problems in GUI
+
+    if (featuresInts.length == 0) {
+        loadFeatures(ApiController.driver);
+    }
+
+    for (var key in plan) {
+        for (var i=0; i < featuresInts.length; i++) {
+            if (key == featuresInts[i]) {
+                if (typeof(plan[key]) != 'number' && plan[key] != 'UNLIMITED' && plan[key] != 'UNSPECIFIED'  ) {
+                    plan[key] = (+plan[key]);
+                    console.log("Feature "+key+" updated with "+plan[key]);
+                }
+            }
+        }
+    }
+
     // modify plan for specific cases
     // 1. VPS performance - could set feature cpu, could be cpufreq
     //     we add value ANY to the feature that was not set explicitely
@@ -390,6 +452,7 @@ ApiController.prototype.savePlan = function (plan, callback) {
         else if ((typeof (plan.cpu) == "undefined") && (typeof (plan.cpufreq) != "undefined"))
             plan.cpu = 'UNSPECIFIED';
     }
+
 
     ApiController.driver.saveOneDoc('plans', {planname: plan.planname, provider: plan.provider},  plan, callback);
 }

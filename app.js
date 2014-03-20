@@ -84,6 +84,7 @@ app.get('/api/0.1/features/:htype/:fname', api.feature);
 app.get('/api/0.1/reviews/short/recent/:n', api.reviewsShortRecent);
 app.get('/api/0.1/reviews/short/recent/:user/:n', api.reviewsShortRecent);
 app.get('/api/0.1/reviews/:provider/:planName', api.reviewsProviderPlan);
+app.get('/api/0.1/reviews/:provider', api.reviewsProvider);
 app.get('/api/0.1/reviews', api.reviews);
 app.get('/api/0.1/review/:id', api.review);
 // banners

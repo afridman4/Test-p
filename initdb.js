@@ -574,7 +574,7 @@ var data = [
             {
                 htype: 'COLOCATION',
                 name:'a1_unit',
-                displayname:'Space by',
+                displayname:'Space',
                 type:'multiple',		// actually this is enum int, bool (yes, no), string, multiple (enum),
                 ismultiple:false,   // allow multiple choice
                 unit:'',		// unit of measurement, like Mb, Hz, etc.
@@ -583,7 +583,7 @@ var data = [
                 defaultvalue:0,
                 hasany: false,		// should show Any in the dialog, applicable for int, enum (for enum means at least one from selected
                 hasunlimited:false,	// should show Unlimited
-                values: ['Unit', 'Rack'],	        // for enum list of possible values
+                values: ['1 Unit', '2 Units', '10 Units', '1/2 Rack (21U)', 'Rack (42U)'],	        // for enum list of possible values
                 hasall:false,		// for enum option 'all selected'
                 operation:'eq'	    // how to compare int  'le', 'ge' or 'eq'
             },
@@ -605,12 +605,28 @@ var data = [
             },
             {
                 htype: 'COLOCATION',
+                name:'port',
+                displayname:'Port',
+                description:'Speed of the server port',
+                type:'int',		// actually this is enum int, bool (yes, no), string, oneof, enum,
+                ismultiple:0,   // allow multiple choice
+                unit:'mbps',		// unit of measurement, like Mb, Hz, etc.
+                maxvalue: 1000,
+                minvalue: 0,
+                defaultvalue:0,
+                hasany: false,		// should show Any in the dialog, applicable for int, enum (for enum means at least one from selected
+                hasunlimited:true,	// should show Unlimited
+                hasall:false,		// for enum option 'all selected'
+                operation:'gt'	    // how to compare int  'le', 'ge' or 'eq'
+            },
+            {
+                htype: 'COLOCATION',
                 name:'power',
                 displayname:'Power Supply',
                 description:'',
                 type:'int',		// actually this is enum int, bool (yes, no), string, oneof, enum,
                 ismultiple:0,   // allow multiple choice
-                unit:'Wt',		// unit of measurement, like Mb, Hz, etc.
+                unit:'A',		// unit of measurement, like Mb, Hz, etc.
                 maxvalue: 1000,
                 minvalue: 0,
                 defaultvalue:0,
@@ -689,6 +705,22 @@ var data = [
             },
             {
                 htype: 'CLOUD',
+                name:'cpufreq',
+                displayname:'CPU Frequency',
+                description:"CPU Frequency is a speed on one processor core",
+                type:'int',		// actually this is enum int, bool (yes, no), string, oneof, enum,
+                ismultiple:0,   // allow multiple choice
+                unit:'GHz',		// unit of measurement, like Mb, Hz, etc.
+                maxvalue: 8,
+                minvalue: 0,
+                defaultvalue:0,
+                hasany: false,		// should show Any in the dialog, applicable for int, enum (for enum means at least one from selected
+                hasunlimited:false,	// should show Unlimited
+                hasall:false,		// for enum option 'all selected'
+                operation:'gt'	    // how to compare int  'le', 'ge' or 'eq'
+            },
+            {
+                htype: 'CLOUD',
                 name:'ram',
                 displayname:'Guaranteed RAM',
                 description:"",
@@ -705,7 +737,7 @@ var data = [
             },
             {
                 htype: 'CLOUD',
-                name:'datatransfer',
+                name:'bandwidth',
                 displayname:'Data Transfers',
                 description:'Bandwidth can be best described as gas for a car. If your website runs out of bandwidth nobody will be able to visit it. 1GB of bandwidth is equal to over 100,000 hits. The average account with us uses less than 2 GB of bandwidth a month. Your bandwidth number used will reset back to zero on the first of every month.',
                 type:'int',		// actually this is enum int, bool (yes, no), string, oneof, enum,

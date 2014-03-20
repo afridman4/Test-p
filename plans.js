@@ -720,10 +720,254 @@ var plans = [
         "ram" : 2048,
         "domainsallowed" : "UNLIMITED",
         "ipaddresses" : 2
+    },
+//-----------------------------------
+// IX Web hosting Cloud plans
+//-----------------------------------
+    {
+        "htype" : "CLOUD",
+        "provider" : "IXwebhosting",
+        "planname" : "Professional Cloud Linux",
+        "description" : "IX Cloud Services gives you all of the flexibility and control of a dedicated server, with better uptime, better performance and less hassle. " +
+            "If you are prepared to administer your own server and applications, this is the product for you.",
+        "short_description" : "CentOS or Debian Linux, 2x CPU Cores, 1GB Guaranteed RAM, 300GB Data Transfer, 20GB SAN Storage, 2 Dedicated IPs",
+        "advprice" : 99.99,
+        "numberofreviews" : 0,
+        "generalrating" : 0, "created" : ISODate("2014-01-07"),
+        "prices" : [
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 1, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 6, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 12, "price" : 5.56 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 24, "price" : 4.76 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 36, "price" : 4.37 }],
+        "a1_os" : "Linux",
+        "bandwidth" : 300,
+        "diskspace" : 20,
+        "cpufreq" : "UNSPECIFIED",
+        "cpu" : 2,
+        "ram" : 1,
+        "ipaddresses" : 2
+    },
+    {
+        "htype" : "CLOUD",
+        "provider" : "IXwebhosting",
+        "planname" : "Business Cloud Linux",
+        "description" : "IX Cloud Services gives you all of the flexibility and control of a dedicated server, with better uptime, better performance and less hassle. " +
+            "If you are prepared to administer your own server and applications, this is the product for you.",
+        "short_description" : "CentOS or Debian Linux, 2x CPU Cores, 4GB Guaranteed RAM, 900GB Data Transfer, 60GB SAN Storage, 2 Dedicated IPs",
+        "advprice" : 174.99,
+        "numberofreviews" : 0,
+        "generalrating" : 0, "created" : ISODate("2014-01-07"),
+        "prices" : [
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 1, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 6, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 12, "price" : 5.56 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 24, "price" : 4.76 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 36, "price" : 4.37 }],
+        "a1_os" : "Linux",
+        "bandwidth" : 900,
+        "diskspace" : 60,
+        "cpufreq" : "UNSPECIFIED",
+        "cpu" : 2,
+        "ram" : 4,
+        "ipaddresses" : 2
+    },
+    {
+        "htype" : "CLOUD",
+        "provider" : "IXwebhosting",
+        "planname" : "Corporate Cloud Linux",
+        "description" : "IX Cloud Services gives you all of the flexibility and control of a dedicated server, with better uptime, better performance and less hassle. " +
+            "If you are prepared to administer your own server and applications, this is the product for you.",
+        "short_description" : "CentOS or Debian Linux, 4x CPU Cores, 4GB Guaranteed RAM, 1500GB Data Transfer, 150GB SAN Storage, 2 Dedicated IPs",
+        "advprice" : 249.99,
+        "numberofreviews" : 0,
+        "generalrating" : 0, "created" : ISODate("2014-01-07"),
+        "prices" : [
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 1, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 6, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 12, "price" : 5.56 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 24, "price" : 4.76 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 36, "price" : 4.37 }],
+        "a1_os" : "Linux",
+        "bandwidth" : 1500,
+        "diskspace" : 150,
+        "cpufreq" : "UNSPECIFIED",
+        "cpu" : 4,
+        "ram" : 4,
+        "ipaddresses" : 2
+    },
+    {
+        "htype" : "CLOUD",
+        "provider" : "IXwebhosting",
+        "planname" : "Professional Cloud Windows",
+        "description" : "IX Cloud Services gives you all of the flexibility and control of a dedicated server, with better uptime, better performance and less hassle. " +
+            "If you are prepared to administer your own server and applications, this is the product for you.",
+        "short_description" : "Windows Server 2008 R2, 2x CPU Cores, 2GB Guaranteed RAM, 300GB Data Transfer, 40GB SAN Storage, 2 Dedicated IPs",
+        "advprice" : 129.99,
+        "numberofreviews" : 0,
+        "generalrating" : 0, "created" : ISODate("2014-01-07"),
+        "prices" : [
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 1, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 6, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 12, "price" : 5.56 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 24, "price" : 4.76 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 36, "price" : 4.37 }],
+        "a1_os" : "Windows",
+        "bandwidth" : 300,
+        "diskspace" : 40,
+        "cpufreq" : "UNSPECIFIED",
+        "cpu" : 2,
+        "ram" : 2,
+        "ipaddresses" : 2
+    },
+    {
+        "htype" : "CLOUD",
+        "provider" : "IXwebhosting",
+        "planname" : "Business Cloud Windows",
+        "description" : "IX Cloud Services gives you all of the flexibility and control of a dedicated server, with better uptime, better performance and less hassle. " +
+            "If you are prepared to administer your own server and applications, this is the product for you.",
+        "short_description" : "Windows Server 2008 R2, 2x CPU Cores, 4GB Guaranteed RAM, 900GB Data Transfer, 60GB SAN Storage, 2 Dedicated IPs",
+        "advprice" : 194.99,
+        "numberofreviews" : 0,
+        "generalrating" : 0, "created" : ISODate("2014-01-07"),
+        "prices" : [
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 1, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 6, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 12, "price" : 5.56 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 24, "price" : 4.76 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 36, "price" : 4.37 }],
+        "a1_os" : "Windows",
+        "bandwidth" : 900,
+        "diskspace" : 60,
+        "cpufreq" : "UNSPECIFIED",
+        "cpu" : 2,
+        "ram" : 4,
+        "ipaddresses" : 2
+    },
+    {
+        "htype" : "CLOUD",
+        "provider" : "IXwebhosting",
+        "planname" : "Corporate Cloud Windows",
+        "description" : "IX Cloud Services gives you all of the flexibility and control of a dedicated server, with better uptime, better performance and less hassle. " +
+            "If you are prepared to administer your own server and applications, this is the product for you.",
+        "short_description" : "Windows Server 2008 R2, 4x CPU Cores, 4GB Guaranteed RAM, 1500GB Data Transfer, 150GB SAN Storage, 2 Dedicated IPs",
+        "advprice" : 269.99,
+        "numberofreviews" : 0,
+        "generalrating" : 0, "created" : ISODate("2014-01-07"),
+        "prices" : [
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 1, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 6, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 12, "price" : 5.56 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 24, "price" : 4.76 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 36, "price" : 4.37 }],
+        "a1_os" : "Windows",
+        "bandwidth" : 1500,
+        "diskspace" : 150,
+        "cpufreq" : "UNSPECIFIED",
+        "cpu" : 4,
+        "ram" : 4,
+        "ipaddresses" : 2
+    },
+    {
+        "htype" : "COLOCATION",
+        "provider": "BurstNET",
+        "planname" : "Single Server Colocation",
+        "description": "BurstNET® Co-Location services are a perfect solution for large corporations, system administration savvy individuals, and reseller/presence providers." +
+            " Hosting services on a shared server are sometimes not enough to allow you the kind of control, configuration, power, and accessibility that you require. " +
+            "You may have the knowledge to administrate and maintain your own servers... so why pay a hosting firm to do it for you? " +
+            "When such is the case, you need to consider BurstNET® Co-Location services. You can fully control hardware, software, and backups, changing anything as you deem fit. " +
+            "For a lower price than installing and maintaining a network at your own location, at BurstNET® you can Co-locate your servers and save a bundle!",
+        "short_description": "1U Rackspace, Bandwidth 5000GB/Month, Power 1A 110v, 5 IPv4 IP addresses + IPv6, Port 10/100 mbps, Free Reboots, no Racking and Setup fee, Cisco Guard DDOS protection",
+        "advprice": 69.95,
+        "numberofreviews" : 0,
+        "generalrating" : 0, "created" : ISODate("2014-01-07"),
+        "prices" : [
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 1, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 6, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 12, "price" : 5.56 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 24, "price" : 4.76 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 36, "price" : 4.37 }],
+        "a1_unit": "1 Unit",
+        "bandwidth" : 5,
+        "port" : 10,
+        "power" : 1,
+        "ipaddresses" : 5
+    },
+    {
+        "htype" : "COLOCATION",
+        "provider": "BurstNET",
+        "planname" : "Quarter Rack Colocation",
+        "description": "BurstNET® Co-Location services are a perfect solution for large corporations, system administration savvy individuals, and reseller/presence providers." +
+            " Hosting services on a shared server are sometimes not enough to allow you the kind of control, configuration, power, and accessibility that you require. " +
+            "You may have the knowledge to administrate and maintain your own servers... so why pay a hosting firm to do it for you? " +
+            "When such is the case, you need to consider BurstNET® Co-Location services. You can fully control hardware, software, and backups, changing anything as you deem fit. " +
+            "For a lower price than installing and maintaining a network at your own location, at BurstNET® you can Co-locate your servers and save a bundle!",
+        "short_description": "10U Rackspace, 10 mbps Unmetered, Power 5A 110v, 28 IPv4 IP addresses + IPv6, Free Reboots and Racking, Setup fee $49.95, Cisco Guard DDOS protection",
+        "advprice": 199.95,
+        "numberofreviews" : 0,
+        "generalrating" : 0, "created" : ISODate("2014-01-07"),
+        "prices" : [
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 1, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 6, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 12, "price" : 5.56 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 24, "price" : 4.76 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 36, "price" : 4.37 }],
+        "a1_unit": "10 Units",
+        "bandwidth" : "UNLIMITED",
+        "port" : 10,
+        "power" : 5,
+        "ipaddresses" : 28
+    },
+    {
+        "htype" : "COLOCATION",
+        "provider": "BurstNET",
+        "planname" : "Half Rack Colocation",
+        "description": "BurstNET® Co-Location services are a perfect solution for large corporations, system administration savvy individuals, and reseller/presence providers." +
+            " Hosting services on a shared server are sometimes not enough to allow you the kind of control, configuration, power, and accessibility that you require. " +
+            "You may have the knowledge to administrate and maintain your own servers... so why pay a hosting firm to do it for you? " +
+            "When such is the case, you need to consider BurstNET® Co-Location services. You can fully control hardware, software, and backups, changing anything as you deem fit. " +
+            "For a lower price than installing and maintaining a network at your own location, at BurstNET® you can Co-locate your servers and save a bundle!",
+        "short_description": "21U Rackspace, 10 mbps Unmetered, Power 10A 110v, 27 IPv4 IP addresses + IPv6, Free Reboots and Racking, Setup fee $99.95, Cisco Guard DDOS protection",
+        "advprice": 299.95,
+        "numberofreviews" : 0,
+        "generalrating" : 0, "created" : ISODate("2014-01-07"),
+        "prices" : [
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 1, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 6, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 12, "price" : 5.56 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 24, "price" : 4.76 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 36, "price" : 4.37 }],
+        "a1_unit": "1/2 Rack (21U)",
+        "bandwidth" : "UNLIMITED",
+        "port" : 10,
+        "power" : 10,
+        "ipaddresses" : 27
+    },
+    {
+        "htype" : "COLOCATION",
+        "provider": "BurstNET",
+        "planname" : "Full Rack Colocation",
+        "description": "BurstNET® Co-Location services are a perfect solution for large corporations, system administration savvy individuals, and reseller/presence providers." +
+            " Hosting services on a shared server are sometimes not enough to allow you the kind of control, configuration, power, and accessibility that you require. " +
+            "You may have the knowledge to administrate and maintain your own servers... so why pay a hosting firm to do it for you? " +
+            "When such is the case, you need to consider BurstNET® Co-Location services. You can fully control hardware, software, and backups, changing anything as you deem fit. " +
+            "For a lower price than installing and maintaining a network at your own location, at BurstNET® you can Co-locate your servers and save a bundle!",
+        "short_description": "42U Rackspace, 10 mbps Unmetered, Power 20A 110v, 28 IPv4 IP addresses + IPv6, Free Reboots and Racking, Setup fee $199.95, Cisco Guard DDOS protection",
+        "advprice": 549.95,
+        "numberofreviews" : 0,
+        "generalrating" : 0, "created" : ISODate("2014-01-07"),
+        "prices" : [
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 1, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 6, "price" : 7.16 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 12, "price" : 5.56 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 24, "price" : 4.76 },
+            { "currency" : "USD", "timeunit" : "month", "unit" : "ALL", "number_timeunit" : 36, "price" : 4.37 }],
+        "a1_unit": "Rack (42U)",
+        "bandwidth" : "UNLIMITED",
+        "port" : 10,
+        "power" : 20,
+        "ipaddresses" : 26
     }
-//-----------------------------------
-// IX Web hosting Dedicated plans
-//-----------------------------------
 ];
 
 loadPlans = function (db, values) {
