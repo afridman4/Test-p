@@ -116,6 +116,13 @@ app.delete('/api/0.1/removebanner/:id', api.removeBanner);
 app.delete('/api/0.1/removereview/:id', api.removeReview);
 app.delete('/api/0.1/removeuser/:login', api.removeUser);
 
+// Price calculation
+//
+//  price/calculate - body is a JSON object with with following structure
+//  {proveder:name, plan:'name', timeperiod:number_of_months, features: [{fname:name, fvalue:value},...]}
+//
+app.post('/api/0.1/price/calculate', api.priceCalculate);
+
 
 /***********************************************************************************
 //

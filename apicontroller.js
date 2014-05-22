@@ -27,6 +27,12 @@ var PLAN_TEMPLATE =
 			numbertimeunit : 1,
 			price : 0
 		}],
+   fprices : [
+        {   feature : 'diskspace',
+            freevalue: 2,
+            numberunit : 1,
+            price : 0
+        }],
    generalrating: 0,               //  integral rating from 0 to 10
    numberofreviews: 0,
    ratings: [                       // array of specific ratings
@@ -370,12 +376,62 @@ ApiController.getBanners = function(callback) {
     ApiController.driver.getDocs('banners', {}, callback);
 }
 
+planAdjustPrice = function(plan, target)
+{
+    if (typeof (plan.fprices) != 'undefined' && (plan.fprices.length > 0) && target.length > 0) {
+        for (var i=0; i < plan.fprices.length; i++ )   {
+            console.log("fprice:" + plan.fprices[i].feature);
+            for (var j=0; j < target.length; j++)
+                {
+                  console.log(target[j].fname);
+                   if (plan.fprices[i].feature == target[j].fname) {
+                       if (target[j].fvalue =='yes') {
+                           plan.advprice += plan.fprices[i].price;
+                       } else if (target[j].fvalue > plan.fprices[i].freevalue) {
+                           console.log("Adjustment:");
+                            plan.advprice += (target[j].fvalue - plan.fprices[i].freevalue)/plan.fprices[i].numberunit * plan.fprices[i].price;
+                       }
+                   }
+                }
+        }
+    }
+}
+
 ApiController.prototype.searchPlans = function (criteria, order_by, callback) {
     criteria = criteria.replace(new RegExp('ZZ[a-z]+YY','g'),'$or');
     console.log("Search plans by:"+criteria);
+    // parse criteria to find features
+
+    var start = 0;
+    var fArray = new Array();
+
+    while ((index = criteria.indexOf("$or", start)) > 0) {
+        index1 = criteria.indexOf('"', index+8);
+        index2 = criteria.indexOf('$gte', index1);
+        index3 = criteria.indexOf('}', index2+6);
+        console.log("Extract :"+ criteria.substring(index+8, index1)+":"+criteria.substring(index2+6,index3));
+        fArray.push({'fname': criteria.substring(index+8, index1),'fvalue': criteria.substring(index2+6,index3)});
+        start = index3;
+    }
+
     var query = JSON.parse(criteria);    // create JSON from string
     if (order_by == null)
-        ApiController.driver.getDocsSorted('plans', query, { advprice: 1}, callback);
+        ApiController.driver.getDocsSorted('plans', query, { advprice: 1}, function (error, plans) {
+            if (error != null)
+                callback(error);
+            if (plans == null)
+                callback(error, plans);
+            else {
+
+                for (var i = 0; i < plans.length; i++)
+                {
+                    console.log("adjust plan "+plans[i].planname);
+                    planAdjustPrice(plans[i], fArray);
+                }
+
+                callback(error, plans);
+            }
+        });
     else {
         ApiController.driver.getDocsSorted('plans', query, order_by, callback);
     }
@@ -512,6 +568,55 @@ ApiController.prototype.searchUsers = function (criteria, callback) {
     var query = JSON.parse(criteria);    // create JSON from string
     console.log('Search users by' + query.name);
     ApiController.driver.getDocsSorted('users', query, { name: 1}, callback);
+}
+
+//
+
+calculate = function(plan, features, timeperiod) {
+    var price = 0;
+    for (var i = 0; i < plan.prices.length; i++) {
+        if (plan.prices[i].numbertimeunit > timeperiod) {
+            break;
+        }
+        price = plan.prices[i].price * timeperiod;
+    }
+
+    if (typeof (plan.fprices) == 'undefined' || plan.fprices.length == 0)
+        return price;
+
+    // add price for additional features
+
+    for (var i=0; i < plan.fprices.length; i++ )   {
+        console.log("fprice:" + plan.fprices[i].feature );
+        for (var j=0; j < features.length; j++)
+        {
+            console.log(features[j].fname);
+            if (plan.fprices[i].feature == features[j].fname) {
+                if (features[j].fvalue =='yes') {
+                  price += plan.fprices[i].price * timeperiod;
+                } else if (features[j].fvalue > plan.fprices[i].freevalue) {
+                    console.log("Adjustment:");
+                    price += ((features[j].fvalue - plan.fprices[i].freevalue)/plan.fprices[i].numberunit * plan.fprices[i].price)*timeperiod;
+                }
+            }
+        }
+    }
+
+    return price;
+}
+
+//
+ApiController.prototype.priceCalculate = function(object, callback) {
+    console.log("priceCalculate for "+object.provider+":"+object.planname);
+    ApiController.driver.getDocs('plans', {provider:object.provider, planname:object.planname}, function (error, plans) {
+        if (error != null)
+            callback(error);
+        else if (plans == null || plans.length == 0)
+            callback(error, plans);
+        else {
+            callback(error, calculate(plans[0], object.features, object.timeperiod).toString());
+        }
+    });
 }
 
 exports.ApiController = ApiController;

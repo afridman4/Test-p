@@ -147,6 +147,28 @@ exports.saveUser = function (req, res) {
         })
 };
 
+exports.priceCalculate = function (req, res) {
+
+    if ( typeof (req.body.provider) == "undefined" || typeof (req.body.planname) == "undefined" || (req.body.provider == null) || (req.body.planname == null)) {
+
+        console.log("api.js:priceCalculate: Provider or planname are not specified");
+        res.send(400, "Provider or planname are not specified");
+    } else {
+
+        console.log("api.js:priceCalculate: "+ req.body.provider +":"+req.body.planname + " timeperiod:" + req.body.timeperiod + " features length:" + req.body.features.length);
+        for (var i = 0; i < req.body.features.length; i++)
+            console.log(req.body.features[i].fname+":"+req.body.features[i].fvalue);
+
+        apiController.priceCalculate(req.body,
+            function (error, docs) {
+                if (error) {
+                    res.send(500, error);
+                }
+                res.send(201, docs);
+            })
+    }
+}
+
 exports.user = function(req, res){
     console.log("getting user "+req.param("login"));
     apiController.user(req.param("login"), function (error, users) {
